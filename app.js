@@ -12,22 +12,22 @@ app.set(express.static("public"));
 // Port
 const port = 3000;
 
-// Try DB
-const main = async () => {
-  // Try add user
-  try {
-    const user = await addUser({
-      username: "firstUser",
-      fullname: "ThisIsFirstUser",
-      dob: "01-01-2000",
-      password: "firstUser",
-    });
-  } catch (error) {
-    console.log(error.message);
-  }
-};
+// // Try DB
+// const main = async () => {
+//   // Try add user
+//   try {
+//     const user = await addUser({
+//       username: "Farhan",
+//       fullname: "FarhanAlr",
+//       dob: "02-02-1945",
+//       password: "123",
+//     });
+//   } catch (error) {
+//     console.log(error.message);
+//   }
+// };
 
-main();
+// main();
 
 // Port listened
 try {
