@@ -34,8 +34,17 @@ const port = 3000;
 
 // Routing
 
-// userDashboard
+// Login
 app.get("/", (req, res) => {
+  res.render("Login");
+});
+
+app.get("/login", (req, res) => {
+  res.render("Login");
+});
+
+// userDashboard
+app.get("/userDashboard", (req, res) => {
   res.render("userDashboard");
 });
 

@@ -1,0 +1,12 @@
+document.addEventListener("DOMContentLoaded", function () {
+  const loginForm = document.getElementById("loginForm");
+
+  if (loginForm) {
+    loginForm.addEventListener("submit", function (e) {
+      e.preventDefault(); // Mencegah reload halaman
+
+      // Langsung arahkan ke userDashboard tanpa cek isi email/password
+      window.location.href = "/userDashboard";
+    });
+  }
+});

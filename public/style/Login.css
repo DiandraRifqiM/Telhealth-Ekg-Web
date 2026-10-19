@@ -1,0 +1,24 @@
+body {
+  background-color: #f4f6f9;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 400px;
+  background: #ffffff;
+}
+
+.form-control:focus {
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.15);
+}
+
+.btn-primary {
+  padding: 12px;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+}
