@@ -1,5 +1,6 @@
 // Dependencies
 const express = require("express");
+const ejs = require("ejs");
 
 // Services
 // user
@@ -7,8 +8,10 @@ const { addUser } = require("./services/userService");
 
 // EJS Setup
 const app = express();
-app.set(express.static("public"));
-
+app.use(express.static("public"));
+app.set("view engine", "ejs");
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 // Port
 const port = 3000;
 
@@ -28,6 +31,13 @@ const port = 3000;
 // };
 
 // main();
+
+// Routing
+
+// userDashboard
+app.get("/", (req, res) => {
+  res.render("userDashboard");
+});
 
 // Port listened
 try {
