@@ -43,6 +43,8 @@ app.get("/login", (req, res) => {
   res.render("Login");
 });
 
+// addUser
+
 // userDashboard
 app.get("/userDashboard", (req, res) => {
   res.render("userDashboard");
