@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
     loginForm.addEventListener("submit", function (e) {
       e.preventDefault(); // Mencegah reload halaman
 
-      window.location.href = "/userDashboard";
+      window.location.href = "/adminDashboard";
     });
   }
 });

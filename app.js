@@ -50,6 +50,43 @@ app.get("/userDashboard", (req, res) => {
   res.render("userDashboard");
 });
 
+// adminDashboard
+app.get("/adminDashboard", (req, res) => {
+  res.render("adminDashboard");
+});
+
+// doctorDashboard
+app.get("/doctorDashboard", (req, res) => {
+  res.render("docterDashboard");
+});
+
+// addUser
+app.get("/addUser", (req, res) => {
+  res.render("addUser");
+});
+
+// proccess addUser
+app.post("/addUser", async (req, res) => {
+  try {
+    const { username, fullname, dob, password } = req.body;
+
+    await addUser({
+      username,
+      fullname,
+      dob,
+      password,
+    });
+
+    console.log("User baru berhasil ditambahkan!");
+    res.redirect("/adminDashboard"); // Setelah sukses, kembalikan ke admin dashboard
+  } catch (error) {
+    console.log("Gagal menambah user:", error.message);
+    res
+      .status(500)
+      .send("Terjadi kesalahan saat menambah user: " + error.message);
+  }
+});
+
 // Port listened
 try {
   app.listen(port, () => {

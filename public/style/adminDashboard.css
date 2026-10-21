@@ -1,7 +1,27 @@
+/* 1. Mengatur font dasar dan latar belakang utama aplikasi */
+
 body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   background-color: #f8f9fa;
+  margin: 0;
+  padding: 0;
 }
+
+/* 2. Mengatur struktur ukuran dan garis pembatas sidebar */
+
+.sidebar {
+  width: 260px;
+  min-width: 260px;
+}
+
+.sidebar-divider {
+  border: 0;
+  border-top: 1px solid rgba(108, 117, 125, 0.25);
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+/* 3. Mengatur efek warna saat menu disorot (hover) atau aktif */
 
 .nav-link {
   color: #495057;
@@ -16,4 +36,25 @@ body {
 .nav-link.active {
   background-color: #e7f1ff !important;
   color: #0d6efd !important;
+}
+
+/* 4. Mengatur ukuran font email pada kartu profil di bawah sidebar */
+
+.profile-email {
+  font-size: 11px;
+}
+
+/* 5. Mengatur kotak area kosong dan transisi tombol aksi */
+
+.dashboard-content-empty {
+  border-style: dashed !important;
+  background-color: #ffffff;
+}
+
+.btn-outline-danger {
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-outline-danger:hover {
+  transform: translateY(-1px);
 }
