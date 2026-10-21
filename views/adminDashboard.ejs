@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Admin Dashboard - Telehealth EKG</title>
+    <title><%= title %></title>
 
     <!-- External CSS -->
     <link rel="stylesheet" href="/style/adminDashboard.css" />
@@ -68,9 +68,9 @@
             <i class="bi bi-person-badge-fill fs-5"></i>
           </div>
           <div>
-            <div class="fw-bold small">Administrator</div>
+            <div class="fw-bold small"><%= userData.fullname %></div>
             <div class="profile-email text-muted small">
-              admin@telehealth.com
+              <%= userData.username %>
             </div>
           </div>
         </div>

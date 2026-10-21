@@ -9,7 +9,11 @@ const { FirestoreSessionStore } = require("./utils/firestoreSession");
 
 // Services
 // user
-const { addUser, validateUser } = require("./services/userService");
+const {
+  addUser,
+  validateUser,
+  getUserData,
+} = require("./services/userService");
 const { db } = require("./utils/db");
 
 // EJS Setup
@@ -63,7 +67,7 @@ const authRole = (...roles) => {
 // Homepage
 app.get("/", async (req, res) => {
   if (!req.session.isAuth) {
-    res.redirect("/login");
+    return res.redirect("/login");
   }
 
   switch (req.session.role) {
@@ -144,19 +148,31 @@ app.post("/logout", async (req, res) => {
 
 // DASHBOARD PER ROLE
 
-// userDashboard
-app.get("/pasienDashboard", isAuth, authRole("pasien"), (req, res) => {
-  res.render("userDashboard");
-});
+// ADMIN ENVIRONMENT
 
 // adminDashboard
-app.get("/adminDashboard", isAuth, authRole("admin"), (req, res) => {
-  res.render("adminDashboard");
+app.get("/adminDashboard", isAuth, authRole("admin"), async (req, res) => {
+  const userId = req.session.userId;
+  const userData = await getUserData(userId);
+  res.render("adminDashboard", { title: "Dashboard Admin", userData });
 });
 
+// DOKTER ENVIRONMENT
+
 // dokterDashboard
-app.get("/dokterDashboard", isAuth, authRole("dokter"), (req, res) => {
-  res.render("dokterDashboard", { title: "Dokter Dashboard" });
+app.get("/dokterDashboard", isAuth, authRole("dokter"), async (req, res) => {
+  const userId = req.session.userId;
+  const userData = await getUserData(userId);
+  res.render("dokterDashboard", { title: "Dashboard Dokter", userData });
+});
+
+// PASIEN ENVIRONMENT
+
+// pasienDashboard
+app.get("/pasienDashboard", isAuth, authRole("pasien"), async (req, res) => {
+  const userId = req.session.userId;
+  const userData = await getUserData(userId);
+  res.render("userDashboard", { title: "Dashboard Pasien", userData });
 });
 
 // Add User

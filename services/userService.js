@@ -23,6 +23,7 @@ const addUser = async (userData) => {
   }
 };
 
+// Validete User
 const validateUser = async (username) => {
   try {
     const snapshot = await db
@@ -46,4 +47,21 @@ const validateUser = async (username) => {
   }
 };
 
-module.exports = { addUser, validateUser };
+// Get User Data
+const getUserData = async (id) => {
+  try {
+    const userRef = await db.collection("users").doc(id).get();
+    if (!userRef.exists) {
+      throw new Error("Data user tidak ditemukan!!");
+    }
+
+    return {
+      id: userRef.id,
+      ...userRef.data(),
+    };
+  } catch (error) {
+    console.log("Fetch Error!!", error.message);
+  }
+};
+
+module.exports = { addUser, validateUser, getUserData };

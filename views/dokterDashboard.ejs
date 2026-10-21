@@ -92,9 +92,9 @@
             <i class="bi bi-person-fill fs-5"></i>
           </div>
           <div>
-            <div class="fw-bold small">Pasien EKG</div>
+            <div class="fw-bold small"><%= userData.fullname %></div>
             <div class="text-muted small" style="font-size: 11px">
-              pasien@telehealth.com
+              <%= userData.username %>
             </div>
           </div>
         </div>
@@ -102,12 +102,14 @@
 
       <div class="flex-grow-1 bg-light p-4 d-flex flex-column">
         <div class="d-flex justify-content-end mb-4">
-          <a
-            href="/login"
-            class="btn btn-outline-danger fw-semibold d-flex align-items-center"
-          >
-            <i class="bi bi-box-arrow-right me-2"></i> Logout
-          </a>
+          <form action="/logout" method="post">
+            <button
+              href="/login"
+              class="btn btn-outline-danger fw-semibold d-flex align-items-center"
+            >
+              <i class="bi bi-box-arrow-right me-2"></i> Logout
+            </button>
+          </form>
         </div>
 
         <div
