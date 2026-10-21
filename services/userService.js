@@ -10,20 +10,40 @@ const addUser = async (userData) => {
     // Adduser
     const userRef = db.collection("users").doc();
     await userRef.set({
-      name: userData.username,
+      username: userData.username,
       fullname: userData.fullname,
       dob: userData.dob,
       password: userData.password,
+      role: userData.role,
     });
 
-    console.log("User added ✅");
-    return {
-      id: userRef.id,
-      ...userData,
-    };
+    console.log("User Ditambah ✅");
   } catch (error) {
     console.log("Gagal menambah user baru ❌", error.message);
   }
 };
 
-module.exports = { addUser };
+const validateUser = async (username) => {
+  try {
+    const snapshot = await db
+      .collection("users")
+      .where("username", "==", username)
+      .limit(1)
+      .get();
+
+    if (snapshot.empty) {
+      return null;
+    }
+    const userDocs = snapshot.docs[0];
+    // const userData = userDocs.data();
+
+    return {
+      id: userDocs.id,
+      ...userDocs.data(),
+    };
+  } catch (error) {
+    console.log("Fettch error!", error);
+  }
+};
+
+module.exports = { addUser, validateUser };

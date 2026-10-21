@@ -26,28 +26,24 @@
           <p class="text-muted small">Silakan masuk ke akun Anda</p>
         </div>
 
-        <form id="loginForm">
+        <form id="loginForm" method="post" action="/login">
           <div class="mb-3">
-            <label for="email" class="form-label fw-semibold"
-              >Email / Username</label
-            >
             <input
               type="text"
               class="form-control"
-              id="email"
-              placeholder="masukkan email/username"
+              id="username"
+              name="username"
+              placeholder="Username"
             />
           </div>
 
           <div class="mb-4">
-            <label for="password" class="form-label fw-semibold"
-              >Password</label
-            >
             <input
               type="password"
               class="form-control"
               id="password"
-              placeholder="masukkan password"
+              name="password"
+              placeholder="Password"
             />
           </div>
 
@@ -63,7 +59,5 @@
       integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h45rYXK/7HAuoJl+0I4"
       crossorigin="anonymous"
     ></script>
-
-    <script src="/js/login.js"></script>
   </body>
 </html>

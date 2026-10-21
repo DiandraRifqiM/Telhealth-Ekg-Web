@@ -1,138 +1,209 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="id">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Tambah User - Admin Panel</title>
 
-    <!-- External CSS -->
-    <link rel="stylesheet" href="/style/addUser.css" />
+    <title><%= title %></title>
 
-    <!-- Bootstrap 5 CSS -->
+    <!-- Bootstrap CSS -->
     <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
       rel="stylesheet"
-      integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
       crossorigin="anonymous"
     />
 
     <!-- Bootstrap Icons -->
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
     />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/style/addUser.css" />
   </head>
-  <body class="bg-light">
-    <!-- Container Utama -->
-    <div
-      class="container d-flex align-items-center justify-content-center min-vh-100"
-    >
-      <div class="card border-0 shadow-sm p-4 w-100" style="max-width: 500px">
-        <!-- Header Form -->
-        <div class="d-flex align-items-center mb-4">
-          <a href="/adminDashboard" class="btn btn-light border me-3">
-            <i class="bi bi-arrow-left"></i>
-          </a>
-          <div>
-            <h4 class="fw-bold mb-0">Tambah User Baru</h4>
-            <p class="text-muted small mb-0">
-              Daftarkan akun baru ke dalam sistem Telehealth EKG
-            </p>
-          </div>
-        </div>
 
-        <!-- Form Tambah User (Mengarah ke rute POST /addUser) -->
-        <form action="/addUser" method="POST">
-          <!-- Input Username -->
-          <div class="mb-3">
-            <label for="username" class="form-label fw-semibold small"
-              >Username</label
-            >
-            <input
-              type="text"
-              class="form-control"
-              id="username"
-              name="username"
-              placeholder="Contoh: farhan_alr"
-              required
-            />
-          </div>
+  <body>
+    <!-- Main Wrapper -->
+    <div class="app-layout d-flex">
+      <!-- Sidebar -->
+      <aside class="sidebar bg-white border-end d-flex flex-column p-3">
+        <!-- Logo -->
+        <a
+          href="/adminDashboard"
+          class="d-flex align-items-center mb-4 text-decoration-none text-primary px-2"
+        >
+          <i class="bi bi-shield-lock-fill fs-3 me-2"></i>
+          <span class="fs-5 fw-bold">Telehealth Admin</span>
+        </a>
 
-          <!-- Input Full Name -->
-          <div class="mb-3">
-            <label for="fullname" class="form-label fw-semibold small"
-              >Nama Lengkap</label
-            >
-            <input
-              type="text"
-              class="form-control"
-              id="fullname"
-              name="fullname"
-              placeholder="Contoh: Farhan Al Ridho"
-              required
-            />
-          </div>
+        <hr class="sidebar-divider" />
 
-          <!-- Input Tanggal Lahir (DOB) -->
-          <div class="mb-3">
-            <label for="dob" class="form-label fw-semibold small"
-              >Tanggal Lahir</label
-            >
-            <input
-              type="date"
-              class="form-control"
-              id="dob"
-              name="dob"
-              required
-            />
-          </div>
-
-          <!-- Input Password -->
-          <div class="mb-3">
-            <label for="password" class="form-label fw-semibold small"
-              >Password Awal</label
-            >
-            <input
-              type="password"
-              class="form-control"
-              id="password"
-              name="password"
-              placeholder="••••••••"
-              required
-            />
-          </div>
-
-          <!-- Pilih Role / Peran -->
-          <div class="mb-4">
-            <label for="role" class="form-label fw-semibold small"
-              >Peran (Role)</label
-            >
-            <select class="form-select" id="role" name="role">
-              <option value="user">Pasien / User</option>
-              <option value="doctor">Dokter</option>
-              <option value="admin">Admin</option>
-            </select>
-          </div>
-
-          <!-- Tombol Aksi -->
-          <div class="d-flex gap-2">
+        <!-- Navigasi -->
+        <ul class="nav nav-pills flex-column mb-auto">
+          <li class="nav-item mb-1">
             <a
               href="/adminDashboard"
-              class="btn btn-outline-secondary w-50 fw-semibold"
-              >Batal</a
+              class="nav-link text-secondary rounded-3 py-2 px-3 fw-semibold"
             >
-            <button type="submit" class="btn btn-primary w-50 fw-semibold">
-              Simpan User
-            </button>
+              <i class="bi bi-bar-chart-line-fill me-3 fs-5"></i>
+              Dashboard
+            </a>
+          </li>
+
+          <li class="nav-item mb-1">
+            <a
+              href="/addUser"
+              class="nav-link active rounded-3 py-2 px-3 fw-semibold"
+              aria-current="page"
+            >
+              <i class="bi bi-person-plus-fill me-3 fs-5"></i>
+              Tambah Pengguna
+            </a>
+          </li>
+        </ul>
+
+        <hr class="sidebar-divider" />
+
+        <!-- Profil Admin -->
+        <div class="user-profile d-flex align-items-center px-2">
+          <div
+            class="profile-avatar bg-primary bg-opacity-10 text-primary rounded-circle p-2 me-2"
+          >
+            <i class="bi bi-person-badge-fill fs-5"></i>
           </div>
-        </form>
-      </div>
+
+          <div class="profile-info">
+            <div class="fw-bold small">Administrator</div>
+            <div class="profile-email text-muted small">
+              admin@telehealth.com
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Konten Utama -->
+      <main class="main-content flex-grow-1 bg-light p-4">
+        <!-- Header -->
+        <header
+          class="page-header d-flex justify-content-between align-items-center mb-4"
+        >
+          <div>
+            <h4 class="fw-bold text-dark mb-1">Tambah Pengguna</h4>
+            <p class="text-muted mb-0">Masukkan informasi pengguna baru.</p>
+          </div>
+
+          <a href="/login" class="btn btn-outline-danger fw-semibold">
+            <i class="bi bi-box-arrow-right me-2"></i>
+            Logout
+          </a>
+        </header>
+
+        <!-- Form Content -->
+        <section class="form-content">
+          <form action="/addUser" method="POST" class="user-form">
+            <!-- Username -->
+            <div class="form-row-custom">
+              <label for="username">Username</label>
+
+              <input
+                type="text"
+                class="form-control"
+                id="username"
+                name="username"
+                placeholder="Masukkan username"
+                autocomplete="username"
+                required
+              />
+            </div>
+
+            <!-- Nama Lengkap -->
+            <div class="form-row-custom">
+              <label for="fullname">Nama Lengkap</label>
+
+              <input
+                type="text"
+                class="form-control"
+                id="fullname"
+                name="fullname"
+                placeholder="Masukkan nama lengkap"
+                autocomplete="name"
+                required
+              />
+            </div>
+
+            <!-- Tanggal Lahir -->
+            <div class="form-row-custom">
+              <label for="dob">Tanggal Lahir</label>
+
+              <input
+                type="date"
+                class="form-control"
+                id="dob"
+                name="dob"
+                autocomplete="bday"
+                required
+              />
+            </div>
+
+            <!-- Password -->
+            <div class="form-row-custom">
+              <label for="password">Password</label>
+
+              <input
+                type="password"
+                class="form-control"
+                id="password"
+                name="password"
+                placeholder="Masukkan password"
+                autocomplete="new-password"
+                required
+              />
+            </div>
+
+            <!-- Konfirmasi Password -->
+            <div class="form-row-custom">
+              <label for="password2">Konfirmasi Password</label>
+
+              <input
+                type="password"
+                class="form-control"
+                id="password2"
+                name="password2"
+                placeholder="Ulangi password"
+                autocomplete="new-password"
+                required
+              />
+            </div>
+
+            <!-- Status -->
+            <div class="form-row-custom">
+              <label for="role">Status</label>
+
+              <select class="form-select" id="role" name="role" required>
+                <option value="pasien">Pasien</option>
+                <option value="dokter">Dokter</option>
+                <option value="admin">Admin</option>
+              </select>
+            </div>
+
+            <!-- Tombol Aksi -->
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary fw-semibold">
+                <i class="bi bi-person-plus me-2"></i>
+                Tambah Pengguna
+              </button>
+            </div>
+          </form>
+        </section>
+      </main>
     </div>
 
     <!-- Bootstrap JS -->
     <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
       crossorigin="anonymous"
     ></script>
   </body>
