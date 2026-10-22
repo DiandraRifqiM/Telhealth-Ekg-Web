@@ -82,7 +82,7 @@ app.get("/", async (req, res) => {
   }
 });
 
-// LOGIN - LOGOUT
+// GENERAL ENVIRONMENT
 
 // Login Page
 app.get("/login", (req, res) => {
@@ -154,30 +154,14 @@ app.post("/logout", async (req, res) => {
 app.get("/adminDashboard", isAuth, authRole("admin"), async (req, res) => {
   const userId = req.session.userId;
   const userData = await getUserData(userId);
-  res.render("adminDashboard", { title: "Dashboard Admin", userData });
-});
-
-// DOKTER ENVIRONMENT
-
-// dokterDashboard
-app.get("/dokterDashboard", isAuth, authRole("dokter"), async (req, res) => {
-  const userId = req.session.userId;
-  const userData = await getUserData(userId);
-  res.render("dokterDashboard", { title: "Dashboard Dokter", userData });
-});
-
-// PASIEN ENVIRONMENT
-
-// pasienDashboard
-app.get("/pasienDashboard", isAuth, authRole("pasien"), async (req, res) => {
-  const userId = req.session.userId;
-  const userData = await getUserData(userId);
-  res.render("userDashboard", { title: "Dashboard Pasien", userData });
+  res.render("admin/adminDashboard", { title: "Dashboard Admin", userData });
 });
 
 // Add User
-app.get("/addUser", (req, res) => {
-  res.render("addUser", { title: "Add User" });
+app.get("/addUser", isAuth, authRole("admin"), async (req, res) => {
+  const userId = req.session.userId;
+  const userData = await getUserData(userId);
+  res.render("admin/addUser", { title: "Add User", userData });
 });
 // proccess addUser
 app.post("/addUser", async (req, res) => {
@@ -220,6 +204,24 @@ app.post("/addUser", async (req, res) => {
     console.log("Gagal menambah user:", error.message);
     res.status(500).send("Error Fetching " + error.message);
   }
+});
+
+// DOKTER ENVIRONMENT
+
+// dokterDashboard
+app.get("/dokterDashboard", isAuth, authRole("dokter"), async (req, res) => {
+  const userId = req.session.userId;
+  const userData = await getUserData(userId);
+  res.render("dokter/dokterDashboard", { title: "Dashboard Dokter", userData });
+});
+
+// PASIEN ENVIRONMENT
+
+// pasienDashboard
+app.get("/pasienDashboard", isAuth, authRole("pasien"), async (req, res) => {
+  const userId = req.session.userId;
+  const userData = await getUserData(userId);
+  res.render("pasien/userDashboard", { title: "Dashboard Pasien", userData });
 });
 
 // Port listened
