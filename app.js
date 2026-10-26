@@ -40,7 +40,7 @@ app.use(
     secret: "secret",
     resave: false,
     saveUninitialized: false,
-  })
+  }),
 );
 app.use(flash());
 
@@ -146,23 +146,77 @@ app.post("/logout", async (req, res) => {
   }
 });
 
-// DASHBOARD PER ROLE
-
 // ADMIN ENVIRONMENT
-
-// adminDashboard
+// adminDashboard Utama
 app.get("/adminDashboard", isAuth, authRole("admin"), async (req, res) => {
   const userId = req.session.userId;
   const userData = await getUserData(userId);
-  res.render("admin/adminDashboard", { title: "Dashboard Admin", userData });
+  res.render("admin/adminDashboard", {
+    title: "Dashboard Admin",
+    userData,
+    activeTab: "dashboard",
+  });
 });
+
+// Daftar Pasien
+app.get(
+  "/adminDashboard/pasien",
+  isAuth,
+  authRole("admin"),
+  async (req, res) => {
+    const userId = req.session.userId;
+    const userData = await getUserData(userId);
+    res.render("admin/daftarPasien", {
+      title: "Daftar Pasien",
+      userData,
+      activeTab: "pasien",
+    });
+  },
+);
+
+// Daftar Dokter
+app.get(
+  "/adminDashboard/dokter",
+  isAuth,
+  authRole("admin"),
+  async (req, res) => {
+    const userId = req.session.userId;
+    const userData = await getUserData(userId);
+    res.render("admin/daftarDokter", {
+      title: "Daftar Dokter",
+      userData,
+      activeTab: "dokter",
+    });
+  },
+);
+
+// Daftar Admin
+app.get(
+  "/adminDashboard/admin",
+  isAuth,
+  authRole("admin"),
+  async (req, res) => {
+    const userId = req.session.userId;
+    const userData = await getUserData(userId);
+    res.render("admin/daftarAdmin", {
+      title: "Daftar Admin",
+      userData,
+      activeTab: "admin",
+    });
+  },
+);
 
 // Add User
 app.get("/addUser", isAuth, authRole("admin"), async (req, res) => {
   const userId = req.session.userId;
   const userData = await getUserData(userId);
-  res.render("admin/addUser", { title: "Add User", userData });
+  res.render("admin/addUser", {
+    title: "Add User",
+    userData,
+    activeTab: "addUser",
+  });
 });
+
 // proccess addUser
 app.post("/addUser", async (req, res) => {
   try {
@@ -177,14 +231,13 @@ app.post("/addUser", async (req, res) => {
 
     if (!checkUname.empty) {
       console.log("Username usdah ada!!");
-      res.redirect("/addUser");
+      return res.redirect("/addUser");
     }
 
     // Matching password
     if (password2 !== password) {
       console.log("Password tidak sama!!");
-      res.redirect("/addUser");
-      throw new Error("Password tidak sama!");
+      return res.redirect("/addUser");
     }
 
     const hashedPassword = await bcrypt.hash(password, 12);
@@ -197,17 +250,14 @@ app.post("/addUser", async (req, res) => {
       role: role,
     });
 
-    // console.log("User baru berhasil ditambahkan!");
     res.redirect("/adminDashboard");
   } catch (error) {
-    // alert("Gagal menambah user ❌");
     console.log("Gagal menambah user:", error.message);
     res.status(500).send("Error Fetching " + error.message);
   }
 });
 
 // DOKTER ENVIRONMENT
-
 // dokterDashboard
 app.get("/dokterDashboard", isAuth, authRole("dokter"), async (req, res) => {
   const userId = req.session.userId;
@@ -216,7 +266,6 @@ app.get("/dokterDashboard", isAuth, authRole("dokter"), async (req, res) => {
 });
 
 // PASIEN ENVIRONMENT
-
 // pasienDashboard
 app.get("/pasienDashboard", isAuth, authRole("pasien"), async (req, res) => {
   const userId = req.session.userId;

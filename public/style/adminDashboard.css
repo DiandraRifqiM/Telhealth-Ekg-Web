@@ -1,60 +1,98 @@
-/* 1. Mengatur font dasar dan latar belakang utama aplikasi */
-
+/* // Pengaturan Dasar & Reset Margin Browser */
+html,
 body {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f8f9fa;
+  height: 100%;
   margin: 0;
   padding: 0;
+  overflow: hidden;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8f9fa;
 }
 
-/* 2. Mengatur struktur ukuran dan garis pembatas sidebar */
-
+/* // Sidebar Desktop */
 .sidebar {
   width: 260px;
   min-width: 260px;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  left: 0;
+  background-color: #198754 !important;
+  color: #ffffff !important;
+  flex-shrink: 0;
+  overflow-y: auto;
 }
 
+/* // Garis Pemisah Sidebar */
 .sidebar-divider {
   border: 0;
-  border-top: 1px solid rgba(108, 117, 125, 0.25);
+  border-top: 1px solid rgba(255, 255, 255, 0.25);
   margin-top: 0;
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
 }
 
-/* 3. Mengatur efek warna saat menu disorot (hover) atau aktif */
-
-.nav-link {
-  color: #495057;
-  transition: all 0.2s ease-in-out;
+/* // Profile Avatar Bulat Sempurna */
+.profile-avatar {
+  width: 42px;
+  height: 42px;
+  min-width: 42px;
+  min-height: 42px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-
-.nav-link:hover {
-  background-color: #e9ecef;
-  color: #0d6efd;
-}
-
-.nav-link.active {
-  background-color: #e7f1ff !important;
-  color: #0d6efd !important;
-}
-
-/* 4. Mengatur ukuran font email pada kartu profil di bawah sidebar */
 
 .profile-email {
   font-size: 11px;
 }
 
-/* 5. Mengatur kotak area kosong dan transisi tombol aksi */
-
-.dashboard-content-empty {
-  border-style: dashed !important;
-  background-color: #ffffff;
-}
-
-.btn-outline-danger {
+/* // Navigasi Sidebar */
+.sidebar .nav-link,
+.sidebar-mobile .nav-link {
+  color: rgba(255, 255, 255, 0.85) !important;
   transition: all 0.2s ease-in-out;
 }
 
-.btn-outline-danger:hover {
-  transform: translateY(-1px);
+.sidebar .nav-link:hover,
+.sidebar-mobile .nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.15) !important;
+  color: #ffffff !important;
+}
+
+/* // Menu Aktif (Latar Putih, Teks Hijau) */
+.sidebar .nav-link.active,
+.sidebar-mobile .nav-link.active {
+  background-color: #ffffff !important;
+  color: #198754 !important;
+  font-weight: bold;
+}
+
+/* // Tabel & Tombol Action */
+.table th,
+.table td {
+  vertical-align: middle;
+}
+
+.btn-info {
+  background-color: #0dcaf0;
+  border-color: #0dcaf0;
+}
+
+/* // Beri jarak tombol aksi tabel saat bertumpuk di HP */
+.table td .btn {
+  margin-bottom: 4px;
+}
+@media (min-width: 768px) {
+  .table td .btn {
+    margin-bottom: 0;
+  }
+}
+
+/* // Perbaikan Posisi Form Add User agar tidak mentok ke bawah / terpotong */
+.form-container-scroll {
+  align-items: flex-start !important;
+  overflow-y: auto !important;
+  padding-top: 1.5rem !important;
+  padding-bottom: 3rem !important;
 }
