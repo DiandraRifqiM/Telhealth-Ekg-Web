@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -196,15 +196,28 @@
             <div class="row mb-3">
               <div class="col-12 col-md-5">
                 <div class="input-group">
-                  <span
-                    class="input-group-text bg-light text-muted border-end-0"
-                    ><i class="bi bi-search"></i
-                  ></span>
-                  <input
-                    type="text"
-                    class="form-control border-start-0 ps-0"
-                    placeholder="Cari nama dokter atau username..."
-                  />
+                  <form
+                    action="/adminDashboard/dokter"
+                    method="get"
+                    class="flex-grow-1"
+                  >
+                    <div class="input-group">
+                      <button
+                        type="submit"
+                        class="input-group-text bg-light text-muted border-end-0"
+                      >
+                        <i class="bi bi-search"></i>
+                      </button>
+
+                      <input
+                        name="search"
+                        type="text"
+                        class="form-control border-start-0"
+                        placeholder="Cari nama atau username dokter..."
+                        value="<%= search || '' %>"
+                      />
+                    </div>
+                  </form>
                 </div>
               </div>
             </div>
@@ -220,25 +233,42 @@
                     <th class="py-3 text-center">Aksi</th>
                   </tr>
                 </thead>
+                <% if (getDokterData.length === 0) { %>
+                <tr>
+                  <td colspan="5" class="text-center">
+                    Dokter tidak ditemukan.
+                  </td>
+                </tr>
+                <% } else { %><% getDokterData.forEach((dokter, id) => { %>
                 <tbody>
                   <tr>
-                    <th>1</th>
-                    <td class="fw-semibold">dr_andi</td>
-                    <td>dr. Andi Wijaya, Sp.JP</td>
-                    <td>
-                      <span
-                        class="badge bg-success bg-opacity-10 text-success px-2 py-1"
-                        >Active</span
-                      >
-                    </td>
+                    <th><%= id+=1 %></th>
+                    <td class="fw-semibold"><%= dokter.username %></td>
+                    <td>Dr. <%= dokter.fullname %></td>
+                    <td><%= dokter.role %></td>
                     <td class="text-center">
                       <button class="btn btn-sm btn-info text-white me-1">
                         Detail
                       </button>
-                      <button class="btn btn-sm btn-danger">Hapus</button>
+                      <form
+                        action="/user?_method=DELETE&redirect=/adminDashboard/dokter"
+                        method="post"
+                        class="d-inline"
+                        onsubmit="return confirm('Yakin ingin menghapus pengguna ini ?')"
+                      >
+                        <input
+                          type="hidden"
+                          name="user_id"
+                          value="<%= dokter.userId %>"
+                        />
+                        <button class="btn btn-sm btn-danger" type="submit">
+                          Hapus
+                        </button>
+                      </form>
                     </td>
                   </tr>
                 </tbody>
+                <% }) %> <% } %>
               </table>
             </div>
           </div>

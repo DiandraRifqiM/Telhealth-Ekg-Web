@@ -5,6 +5,7 @@ const bcrypt = require("bcrypt");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const flash = require("express-flash");
+const methodOverride = require("method-override");
 const { FirestoreSessionStore } = require("./utils/firestoreSession");
 
 // Services
@@ -13,11 +14,19 @@ const {
   addUser,
   validateUser,
   getUserData,
+  getPasienList,
+  getDokterList,
+  getAdminList,
+  searchPasien,
+  searchDokter,
+  searchAdmin,
+  delUser,
 } = require("./services/userService");
 const { db } = require("./utils/db");
 
 // EJS Setup
 const app = express();
+app.use(methodOverride("_method"));
 app.use(express.static("public"));
 app.set("view engine", "ejs");
 app.use(express.json());
@@ -40,7 +49,7 @@ app.use(
     secret: "secret",
     resave: false,
     saveUninitialized: false,
-  }),
+  })
 );
 app.use(flash());
 
@@ -115,8 +124,8 @@ app.post("/login", async (req, res) => {
 
       req.session.save((err) => {
         if (err) return next(err);
-        console.log("Session tersimpan");
-        console.log("Role session:", req.session.role);
+        // console.log("Session tersimpan");
+        // console.log("Role session:", req.session.role);
 
         // Validate role
         switch (req.session.role) {
@@ -151,9 +160,15 @@ app.post("/logout", async (req, res) => {
 app.get("/adminDashboard", isAuth, authRole("admin"), async (req, res) => {
   const userId = req.session.userId;
   const userData = await getUserData(userId);
+  const { pasienCount } = await getPasienList();
+  const { adminCount } = await getAdminList();
+  const { dokterCount } = await getDokterList();
   res.render("admin/adminDashboard", {
     title: "Dashboard Admin",
     userData,
+    pasienCount,
+    adminCount,
+    dokterCount,
     activeTab: "dashboard",
   });
 });
@@ -166,12 +181,19 @@ app.get(
   async (req, res) => {
     const userId = req.session.userId;
     const userData = await getUserData(userId);
+    const search = req.query.search || "";
+    const result = search ? await searchPasien(search) : await getPasienList();
+    const { getPasienData } = result;
+    console.log("Search:", search);
+    console.log("Result:", result);
     res.render("admin/daftarPasien", {
       title: "Daftar Pasien",
+      search,
       userData,
+      getPasienData,
       activeTab: "pasien",
     });
-  },
+  }
 );
 
 // Daftar Dokter
@@ -182,12 +204,17 @@ app.get(
   async (req, res) => {
     const userId = req.session.userId;
     const userData = await getUserData(userId);
+    const search = req.query.search || "";
+    const result = search ? await searchDokter(search) : await getDokterList();
+    const { getDokterData } = result;
     res.render("admin/daftarDokter", {
       title: "Daftar Dokter",
       userData,
+      search,
+      getDokterData,
       activeTab: "dokter",
     });
-  },
+  }
 );
 
 // Daftar Admin
@@ -198,12 +225,17 @@ app.get(
   async (req, res) => {
     const userId = req.session.userId;
     const userData = await getUserData(userId);
+    const search = req.query.search || "";
+    const result = search ? await searchAdmin(search) : await getAdminList();
+    const { getAdminData } = result;
     res.render("admin/daftarAdmin", {
       title: "Daftar Admin",
       userData,
+      search,
+      getAdminData,
       activeTab: "admin",
     });
-  },
+  }
 );
 
 // Add User
@@ -254,6 +286,18 @@ app.post("/addUser", async (req, res) => {
   } catch (error) {
     console.log("Gagal menambah user:", error.message);
     res.status(500).send("Error Fetching " + error.message);
+  }
+});
+
+// Delete User
+app.delete("/user", isAuth, authRole("admin"), async (req, res) => {
+  try {
+    const userId = req.body.user_id;
+    await delUser(userId);
+    const redirUrl = req.query.redirect || "/";
+    res.redirect(redirUrl);
+  } catch (error) {
+    console.log("Gagal menghapus user!!");
   }
 });
 
