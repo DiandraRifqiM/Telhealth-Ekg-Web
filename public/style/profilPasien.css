@@ -1,0 +1,89 @@
+/* Pengaturan Dasar & Reset */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8f9fa;
+}
+
+/* Sidebar Desktop Biru */
+.sidebar {
+  width: 260px;
+  min-width: 260px;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  left: 0;
+  background-color: #0d6efd !important;
+  color: #ffffff !important;
+  flex-shrink: 0;
+  overflow-y: auto;
+}
+
+.sidebar-divider {
+  border: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.25);
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+}
+
+/* Navigasi Sidebar */
+.sidebar .nav-link,
+.sidebar-mobile .nav-link {
+  color: rgba(255, 255, 255, 0.85) !important;
+  transition: all 0.2s ease-in-out;
+}
+
+.sidebar .nav-link:hover,
+.sidebar-mobile .nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.15) !important;
+  color: #ffffff !important;
+}
+
+.sidebar .nav-link.active,
+.sidebar-mobile .nav-link.active {
+  background-color: #ffffff !important;
+  color: #0d6efd !important;
+  font-weight: bold;
+}
+
+/* Tombol Profil di Sidebar Bottom */
+.sidebar-profile-btn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  width: 100%;
+  text-align: left;
+  border-radius: 8px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.sidebar-profile-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+/* Container Konten Utama */
+.main-content-scroll {
+  overflow-y: auto !important;
+  height: 100vh;
+}
+
+/* Avatar Besar di Halaman Profil */
+.profile-avatar-large {
+  width: 90px;
+  height: 90px;
+  min-width: 90px;
+  min-height: 90px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

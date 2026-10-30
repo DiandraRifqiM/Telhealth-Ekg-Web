@@ -49,7 +49,7 @@ app.use(
     secret: "secret",
     resave: false,
     saveUninitialized: false,
-  })
+  }),
 );
 app.use(flash());
 
@@ -184,8 +184,6 @@ app.get(
     const search = req.query.search || "";
     const result = search ? await searchPasien(search) : await getPasienList();
     const { getPasienData } = result;
-    console.log("Search:", search);
-    console.log("Result:", result);
     res.render("admin/daftarPasien", {
       title: "Daftar Pasien",
       search,
@@ -193,7 +191,7 @@ app.get(
       getPasienData,
       activeTab: "pasien",
     });
-  }
+  },
 );
 
 // Daftar Dokter
@@ -214,7 +212,7 @@ app.get(
       getDokterData,
       activeTab: "dokter",
     });
-  }
+  },
 );
 
 // Daftar Admin
@@ -235,7 +233,7 @@ app.get(
       getAdminData,
       activeTab: "admin",
     });
-  }
+  },
 );
 
 // Add User
@@ -315,6 +313,16 @@ app.get("/pasienDashboard", isAuth, authRole("pasien"), async (req, res) => {
   const userId = req.session.userId;
   const userData = await getUserData(userId);
   res.render("pasien/userDashboard", { title: "Dashboard Pasien", userData });
+});
+
+// Halaman Profil Pasien (BARU DITAMBAHKAN)
+app.get("/user/profile", isAuth, authRole("pasien"), async (req, res) => {
+  const userId = req.session.userId;
+  const userData = await getUserData(userId);
+  res.render("pasien/profilPasien", {
+    title: "Profil Pasien",
+    userData,
+  });
 });
 
 // Port listened

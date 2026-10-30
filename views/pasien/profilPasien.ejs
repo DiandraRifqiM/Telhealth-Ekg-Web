@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title><%= title %></title>
+
+    <link rel="stylesheet" href="/style/profilPasien.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+    />
+  </head>
+  <body class="bg-light">
+    <div class="d-flex min-vh-100 overflow-hidden">
+      <!-- SIDEBAR DESKTOP -->
+      <div
+        class="sidebar d-none d-md-flex flex-column p-3 bg-primary text-white"
+      >
+        <a
+          href="#"
+          class="d-flex align-items-center mb-3 text-decoration-none text-white px-2"
+        >
+          <i class="bi bi-heart-pulse-fill fs-3 me-2"></i>
+          <span class="fs-5 fw-bold">EKG Monitor</span>
+        </a>
+        <hr class="sidebar-divider" />
+        <ul class="nav nav-pills flex-column mb-auto">
+          <li class="nav-item mb-1">
+            <a
+              href="/pasienDashboard"
+              class="nav-link rounded-3 py-2 px-3 fw-semibold text-white"
+            >
+              <i class="bi bi-bar-chart-line-fill me-3 fs-5"></i> Dashboard
+            </a>
+          </li>
+        </ul>
+        <hr class="sidebar-divider" />
+        <div>
+          <a
+            href="/user/profile"
+            class="sidebar-profile-btn bg-white text-primary text-decoration-none"
+          >
+            <div
+              class="bg-primary text-white rounded-circle p-2 me-2 d-flex align-items-center justify-content-center"
+              style="width: 35px; height: 35px"
+            >
+              <i class="bi bi-person-fill"></i>
+            </div>
+            <div class="text-truncate">
+              <div class="fw-bold small text-truncate text-primary">
+                <%= userData.fullname %>
+              </div>
+              <div class="text-primary opacity-75" style="font-size: 11px">
+                Profil Saya
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- SIDEBAR MOBILE (OFFCANVAS) -->
+      <div
+        class="offcanvas offcanvas-start bg-primary text-white sidebar-mobile"
+        tabindex="-1"
+        id="mobileSidebar"
+      >
+        <div
+          class="offcanvas-header border-bottom border-light border-opacity-25 px-4 pt-4"
+        >
+          <h5 class="offcanvas-title fw-bold">
+            <i class="bi bi-heart-pulse-fill me-2"></i> EKG Monitor
+          </h5>
+          <button
+            type="button"
+            class="btn-close btn-close-white"
+            data-bs-dismiss="offcanvas"
+          ></button>
+        </div>
+        <div class="offcanvas-body d-flex flex-column p-3">
+          <ul class="nav nav-pills flex-column mb-auto">
+            <li class="nav-item mb-1">
+              <a
+                href="/pasienDashboard"
+                class="nav-link rounded-3 py-2 px-3 fw-semibold text-white"
+              >
+                <i class="bi bi-bar-chart-line-fill me-3 fs-5"></i> Dashboard
+              </a>
+            </li>
+          </ul>
+          <hr class="border-light border-opacity-25" />
+          <div>
+            <a
+              href="/user/profile"
+              class="sidebar-profile-btn bg-white text-primary text-decoration-none"
+            >
+              <div
+                class="bg-primary text-white rounded-circle p-2 me-2 d-flex align-items-center justify-content-center"
+                style="width: 35px; height: 35px"
+              >
+                <i class="bi bi-person-fill"></i>
+              </div>
+              <div class="text-truncate">
+                <div class="fw-bold small text-truncate text-primary">
+                  <%= userData.fullname %>
+                </div>
+                <div class="text-primary opacity-75" style="font-size: 11px">
+                  Profil Saya
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- KONTEN UTAMA -->
+      <div
+        class="flex-grow-1 bg-light d-flex flex-column h-100 main-content-scroll"
+      >
+        <!-- TOPBAR -->
+        <div
+          class="bg-white border-bottom px-3 px-md-4 py-3 d-flex justify-content-between align-items-center shadow-sm"
+        >
+          <div class="d-flex align-items-center">
+            <button
+              class="btn btn-outline-primary d-md-none me-3"
+              type="button"
+              data-bs-toggle="offcanvas"
+              data-bs-target="#mobileSidebar"
+            >
+              <i class="bi bi-list fs-5"></i>
+            </button>
+            <h4 class="fw-bold text-dark m-0 fs-5 fs-md-4">Profil Pasien</h4>
+          </div>
+          <div>
+            <form action="/logout" method="post" class="m-0">
+              <button
+                type="submit"
+                class="btn btn-outline-danger btn-sm fw-semibold d-flex align-items-center"
+              >
+                <i class="bi bi-box-arrow-right me-2"></i> Logout
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <!-- ISI PROFIL -->
+        <div class="p-3 p-md-4 flex-grow-1">
+          <!-- TOMBOL KEMBALI DI ATAS (POSISI RAPI & TIDAK KEPANJANGAN) -->
+          <div class="mb-3">
+            <a
+              href="/pasienDashboard"
+              class="btn btn-outline-secondary btn-sm px-3 py-2 fw-semibold d-inline-flex align-items-center rounded-3 text-decoration-none"
+            >
+              <i class="bi bi-arrow-left me-2"></i> Kembali
+            </a>
+          </div>
+
+          <div class="row g-4">
+            <!-- CARD UTAMA (NAMA & USERNAME) -->
+            <div class="col-12 col-lg-4">
+              <div
+                class="card border-0 shadow-sm rounded-4 p-4 text-center h-100"
+              >
+                <div class="d-flex justify-content-center mb-3">
+                  <div
+                    class="profile-avatar-large bg-primary bg-opacity-10 text-primary"
+                  >
+                    <i class="bi bi-person-fill fs-1"></i>
+                  </div>
+                </div>
+                <h5 class="fw-bold text-dark mb-1"><%= userData.fullname %></h5>
+                <p class="text-muted small mb-3">@<%= userData.username %></p>
+                <span
+                  class="badge bg-primary bg-opacity-10 text-primary py-2 px-3 rounded-pill fw-semibold mb-3"
+                >
+                  <i class="bi bi-shield-check me-1"></i> Role: Pasien
+                </span>
+                <hr class="text-muted opacity-25" />
+                <div class="text-start">
+                  <span class="text-muted small d-block">Status Akun</span>
+                  <span
+                    class="badge bg-success bg-opacity-10 text-success fw-semibold mt-1"
+                    >● Aktif</span
+                  >
+                </div>
+              </div>
+            </div>
+
+            <!-- CARD DATA MEDIS & INFORMASI PRIBADI -->
+            <div class="col-12 col-lg-8">
+              <div class="card border-0 shadow-sm rounded-4 p-4 h-100">
+                <h5 class="fw-bold text-dark mb-4 border-bottom pb-2">
+                  <i class="bi bi-card-heading text-primary me-2"></i> Detail
+                  Informasi Pasien
+                </h5>
+
+                <div class="row g-3">
+                  <!-- Nama Lengkap -->
+                  <div class="col-12 col-md-6">
+                    <div class="p-3 bg-light rounded-3 border border-1">
+                      <span class="text-muted small d-block mb-1"
+                        >Nama Lengkap</span
+                      >
+                      <strong class="text-dark"
+                        ><%= userData.fullname %></strong
+                      >
+                    </div>
+                  </div>
+
+                  <!-- Username -->
+                  <div class="col-12 col-md-6">
+                    <div class="p-3 bg-light rounded-3 border border-1">
+                      <span class="text-muted small d-block mb-1"
+                        >Username / ID</span
+                      >
+                      <strong class="text-dark"
+                        ><%= userData.username %></strong
+                      >
+                    </div>
+                  </div>
+
+                  <!-- Tanggal Lahir -->
+                  <div class="col-12 col-md-6">
+                    <div class="p-3 bg-light rounded-3 border border-1">
+                      <span class="text-muted small d-block mb-1"
+                        >Tanggal Lahir</span
+                      >
+                      <strong class="text-dark"
+                        ><%= userData.birthdate || '15 Mei 1998 (Dummy)'
+                        %></strong
+                      >
+                    </div>
+                  </div>
+
+                  <!-- Jenis Kelamin -->
+                  <div class="col-12 col-md-6">
+                    <div class="p-3 bg-light rounded-3 border border-1">
+                      <span class="text-muted small d-block mb-1"
+                        >Jenis Kelamin</span
+                      >
+                      <strong class="text-dark"
+                        ><%= userData.gender || 'Laki-laki (Dummy)' %></strong
+                      >
+                    </div>
+                  </div>
+
+                  <!-- Golongan Darah -->
+                  <div class="col-12 col-md-6">
+                    <div class="p-3 bg-light rounded-3 border border-1">
+                      <span class="text-muted small d-block mb-1"
+                        >Golongan Darah</span
+                      >
+                      <strong class="text-dark"
+                        ><%= userData.bloodType || 'O+ (Dummy)' %></strong
+                      >
+                    </div>
+                  </div>
+
+                  <!-- Nomor Kontak / Telepon -->
+                  <div class="col-12 col-md-6">
+                    <div class="p-3 bg-light rounded-3 border border-1">
+                      <span class="text-muted small d-block mb-1"
+                        >Nomor Telepon / WA</span
+                      >
+                      <strong class="text-dark"
+                        ><%= userData.phone || '0812-3456-7890 (Dummy)'
+                        %></strong
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
