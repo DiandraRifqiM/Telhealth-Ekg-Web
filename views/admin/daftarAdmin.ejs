@@ -4,7 +4,6 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Daftar Admin - Telehealth EKG</title>
-
     <link rel="stylesheet" href="/style/adminDashboard.css" />
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
@@ -68,18 +67,20 @@
           </li>
         </ul>
         <hr class="sidebar-divider" />
-        <div class="user-profile d-flex align-items-center px-2">
-          <div class="profile-avatar bg-white text-success rounded-circle me-2">
-            <i class="bi bi-person-badge-fill fs-5"></i>
-          </div>
-          <div class="text-truncate">
-            <div class="fw-bold small text-white text-truncate">
-              <%= locals.userData ? userData.fullname : 'Admin' %>
+        <div>
+          <a href="/admin/profile" class="sidebar-profile-link">
+            <div class="profile-avatar bg-white text-success rounded-circle me-2">
+              <i class="bi bi-person-badge-fill fs-5"></i>
             </div>
-            <div class="profile-email text-white-50 small text-truncate">
-              <%= locals.userData ? userData.username : 'admin' %>
+            <div class="text-truncate">
+              <div class="fw-bold small text-white text-truncate">
+                <%= locals.userData ? userData.fullname : 'Admin' %>
+              </div>
+              <div class="profile-email text-white-50 small text-truncate">
+                <%= locals.userData ? userData.username : 'admin' %>
+              </div>
             </div>
-          </div>
+          </a>
         </div>
       </div>
 
@@ -144,20 +145,22 @@
             </li>
           </ul>
           <hr class="border-light border-opacity-25" />
-          <div class="user-profile d-flex align-items-center px-2">
-            <div
-              class="profile-avatar bg-white text-success rounded-circle me-2"
-            >
-              <i class="bi bi-person-badge-fill fs-5"></i>
-            </div>
-            <div class="text-truncate">
-              <div class="fw-bold small text-white text-truncate">
-                <%= locals.userData ? userData.fullname : 'Admin' %>
+          <div>
+            <a href="/admin/profile" class="sidebar-profile-link">
+              <div
+                class="profile-avatar bg-white text-success rounded-circle me-2"
+              >
+                <i class="bi bi-person-badge-fill fs-5"></i>
               </div>
-              <div class="profile-email text-white-50 small text-truncate">
-                <%= locals.userData ? userData.username : 'admin' %>
+              <div class="text-truncate">
+                <div class="fw-bold small text-white text-truncate">
+                  <%= locals.userData ? userData.fullname : 'Admin' %>
+                </div>
+                <div class="profile-email text-white-50 small text-truncate">
+                  <%= locals.userData ? userData.username : 'admin' %>
+                </div>
               </div>
-            </div>
+            </a>
           </div>
         </div>
       </div>
@@ -247,9 +250,11 @@
                     <td><%= admin.fullname %></td>
                     <td><%= admin.role %></td>
                     <td class="text-center">
-                      <button class="btn btn-sm btn-info text-white me-1">
-                        Detail
-                      </button>
+                      <a
+                        href="/admin/user/<%= admin.id || admin.userId %>"
+                        class="btn btn-sm btn-info text-white me-1 text-decoration-none"
+                        >Detail</a
+                      >
                       <form
                         action="/user?_method=DELETE&redirect=/adminDashboard/admin"
                         method="post"
@@ -259,7 +264,7 @@
                         <input
                           type="hidden"
                           name="user_id"
-                          value="<%= admin.userId %>"
+                          value="<%= admin.id || admin.userId %>"
                         />
                         <button class="btn btn-sm btn-danger" type="submit">
                           Hapus

@@ -124,8 +124,6 @@ app.post("/login", async (req, res) => {
 
       req.session.save((err) => {
         if (err) return next(err);
-        // console.log("Session tersimpan");
-        // console.log("Role session:", req.session.role);
 
         // Validate role
         switch (req.session.role) {
@@ -172,6 +170,100 @@ app.get("/adminDashboard", isAuth, authRole("admin"), async (req, res) => {
     activeTab: "dashboard",
   });
 });
+
+// Halaman Profil Admin
+app.get("/admin/profile", isAuth, authRole("admin"), async (req, res) => {
+  const userId = req.session.userId;
+  const userData = await getUserData(userId);
+  res.render("admin/profilAdmin", {
+    title: "Profil Admin",
+    userData,
+    activeTab: "profile",
+  });
+});
+
+// Halaman Detail Pengguna (Admin)
+app.get("/admin/user/:id", isAuth, authRole("admin"), async (req, res) => {
+  try {
+    const userId = req.session.userId;
+    const userData = await getUserData(userId);
+    const targetUserId = req.params.id;
+    const targetUser = await getUserData(targetUserId);
+
+    res.render("admin/detailUser", {
+      title: "Detail Pengguna - Admin Dashboard",
+      userData,
+      targetUser,
+      activeTab: "dashboard",
+    });
+  } catch (error) {
+    console.log("Gagal memuat detail user:", error.message);
+    res.redirect("/adminDashboard");
+  }
+});
+
+// ==========================================
+// RUTE TAMBAHAN: Add Pasien ke Dokter
+// ==========================================
+
+// 1. Render Halaman Form Add Pasien ke Dokter
+app.get(
+  "/admin/dokter/add-pasien/:id",
+  isAuth,
+  authRole("admin"),
+  async (req, res) => {
+    try {
+      const userId = req.session.userId;
+      const userData = await getUserData(userId);
+      const targetDokterId = req.params.id;
+      const targetDokter = await getUserData(targetDokterId);
+
+      // Ambil data list pasien untuk opsi dropdown
+      const { getPasienData: pasienList } = await getPasienList();
+
+      res.render("admin/addPasienDokter", {
+        title: "Tambah Pasien ke Dokter",
+        userData,
+        targetDokter,
+        pasienList,
+        activeTab: "dokter",
+      });
+    } catch (error) {
+      console.log("Gagal memuat halaman add pasien dokter:", error.message);
+      res.redirect("/adminDashboard/dokter");
+    }
+  },
+);
+
+// 2. Proses Simpan Relasi Pasien ke Dokter
+app.post(
+  "/admin/dokter/add-pasien/:id",
+  isAuth,
+  authRole("admin"),
+  async (req, res) => {
+    try {
+      const dokterId = req.params.id;
+      const { pasien_id, catatan } = req.body;
+
+      // Menyimpan relasi dokterId ke dokumen pasien di Firestore
+      await db
+        .collection("users")
+        .doc(pasien_id)
+        .update({
+          doctorId: dokterId,
+          catatanMedisAwal: catatan || "",
+        });
+
+      console.log("Pasien berhasil dihubungkan ke dokter!");
+      res.redirect("/adminDashboard/dokter");
+    } catch (error) {
+      console.log("Gagal menghubungkan pasien:", error.message);
+      res.status(500).send("Error: " + error.message);
+    }
+  },
+);
+
+// ==========================================
 
 // Daftar Pasien
 app.get(
@@ -252,7 +344,6 @@ app.post("/addUser", async (req, res) => {
   try {
     const { username, fullname, dob, password, password2, role } = req.body;
 
-    // Check username
     const checkUname = await db
       .collection("users")
       .where("username", "==", username)
@@ -260,11 +351,10 @@ app.post("/addUser", async (req, res) => {
       .get();
 
     if (!checkUname.empty) {
-      console.log("Username usdah ada!!");
+      console.log("Username sudah ada!!");
       return res.redirect("/addUser");
     }
 
-    // Matching password
     if (password2 !== password) {
       console.log("Password tidak sama!!");
       return res.redirect("/addUser");
@@ -272,7 +362,7 @@ app.post("/addUser", async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 12);
 
-    const userAdd = await addUser({
+    await addUser({
       username: username,
       fullname: fullname,
       dob: dob,
@@ -300,7 +390,6 @@ app.delete("/user", isAuth, authRole("admin"), async (req, res) => {
 });
 
 // DOKTER ENVIRONMENT
-// dokterDashboard
 app.get("/dokterDashboard", isAuth, authRole("dokter"), async (req, res) => {
   const userId = req.session.userId;
   const userData = await getUserData(userId);
@@ -308,14 +397,12 @@ app.get("/dokterDashboard", isAuth, authRole("dokter"), async (req, res) => {
 });
 
 // PASIEN ENVIRONMENT
-// pasienDashboard
 app.get("/pasienDashboard", isAuth, authRole("pasien"), async (req, res) => {
   const userId = req.session.userId;
   const userData = await getUserData(userId);
   res.render("pasien/userDashboard", { title: "Dashboard Pasien", userData });
 });
 
-// Halaman Profil Pasien (BARU DITAMBAHKAN)
 app.get("/user/profile", isAuth, authRole("pasien"), async (req, res) => {
   const userId = req.session.userId;
   const userData = await getUserData(userId);

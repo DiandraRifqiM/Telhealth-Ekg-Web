@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -71,18 +71,22 @@
           </li>
         </ul>
         <hr class="sidebar-divider" />
-        <div class="user-profile d-flex align-items-center px-2">
-          <div class="profile-avatar bg-white text-success rounded-circle me-2">
-            <i class="bi bi-person-badge-fill fs-5"></i>
-          </div>
-          <div class="text-truncate">
-            <div class="fw-bold small text-white text-truncate">
-              <%= locals.userData ? userData.fullname : 'Admin' %>
+        <div>
+          <a href="/admin/profile" class="sidebar-profile-link">
+            <div
+              class="profile-avatar bg-white text-success rounded-circle me-2"
+            >
+              <i class="bi bi-person-badge-fill fs-5"></i>
             </div>
-            <div class="profile-email text-white-50 small text-truncate">
-              <%= locals.userData ? userData.username : 'admin' %>
+            <div class="text-truncate">
+              <div class="fw-bold small text-white text-truncate">
+                <%= locals.userData ? userData.fullname : 'Admin' %>
+              </div>
+              <div class="profile-email text-white-50 small text-truncate">
+                <%= locals.userData ? userData.username : 'admin' %>
+              </div>
             </div>
-          </div>
+          </a>
         </div>
       </div>
 
@@ -148,20 +152,22 @@
             </li>
           </ul>
           <hr class="border-light border-opacity-25" />
-          <div class="user-profile d-flex align-items-center px-2">
-            <div
-              class="profile-avatar bg-white text-success rounded-circle me-2"
-            >
-              <i class="bi bi-person-badge-fill fs-5"></i>
-            </div>
-            <div class="text-truncate">
-              <div class="fw-bold small text-white text-truncate">
-                <%= locals.userData ? userData.fullname : 'Admin' %>
+          <div>
+            <a href="/admin/profile" class="sidebar-profile-link">
+              <div
+                class="profile-avatar bg-white text-success rounded-circle me-2"
+              >
+                <i class="bi bi-person-badge-fill fs-5"></i>
               </div>
-              <div class="profile-email text-white-50 small text-truncate">
-                <%= locals.userData ? userData.username : 'admin' %>
+              <div class="text-truncate">
+                <div class="fw-bold small text-white text-truncate">
+                  <%= locals.userData ? userData.fullname : 'Admin' %>
+                </div>
+                <div class="profile-email text-white-50 small text-truncate">
+                  <%= locals.userData ? userData.username : 'admin' %>
+                </div>
               </div>
-            </div>
+            </a>
           </div>
         </div>
       </div>

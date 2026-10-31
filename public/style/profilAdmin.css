@@ -1,0 +1,31 @@
+/* Profil Admin Custom CSS */
+.sidebar {
+  width: 260px;
+  min-height: 100vh;
+}
+
+.sidebar-profile-btn {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+}
+
+.sidebar-profile-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.profile-avatar-large {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.main-content-scroll {
+  overflow-y: auto;
+  max-height: 100vh;
+}

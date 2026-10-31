@@ -71,24 +71,28 @@
           </li>
         </ul>
         <hr class="sidebar-divider" />
-        <div class="user-profile d-flex align-items-center px-2">
-          <div class="profile-avatar bg-white text-success rounded-circle me-2">
-            <i class="bi bi-person-badge-fill fs-5"></i>
-          </div>
-          <div class="text-truncate">
-            <div class="fw-bold small text-white text-truncate">
-              <%= locals.userData ? userData.fullname : 'Admin' %>
+        <div>
+          <a href="/admin/profile" class="sidebar-profile-link">
+            <div
+              class="profile-avatar bg-white text-success rounded-circle me-2"
+            >
+              <i class="bi bi-person-badge-fill fs-5"></i>
             </div>
-            <div class="profile-email text-white-50 small text-truncate">
-              <%= locals.userData ? userData.username : 'admin' %>
+            <div class="text-truncate">
+              <div class="fw-bold small text-white text-truncate">
+                <%= locals.userData ? userData.fullname : 'Admin' %>
+              </div>
+              <div class="profile-email text-white-50 small text-truncate">
+                <%= locals.userData ? userData.username : 'admin' %>
+              </div>
             </div>
-          </div>
+          </a>
         </div>
       </div>
 
       <!-- // SIDEBAR MOBILE (OFFCANVAS) -->
       <div
-        class="offcanvas offcanvas-start bg-success text-white sidebar-mobile"
+        class="sidebar-mobile offcanvas offcanvas-start bg-success text-white"
         tabindex="-1"
         id="mobileSidebar"
       >
@@ -148,20 +152,22 @@
             </li>
           </ul>
           <hr class="border-light border-opacity-25" />
-          <div class="user-profile d-flex align-items-center px-2">
-            <div
-              class="profile-avatar bg-white text-success rounded-circle me-2"
-            >
-              <i class="bi bi-person-badge-fill fs-5"></i>
-            </div>
-            <div class="text-truncate">
-              <div class="fw-bold small text-white text-truncate">
-                <%= locals.userData ? userData.fullname : 'Admin' %>
+          <div>
+            <a href="/admin/profile" class="sidebar-profile-link">
+              <div
+                class="profile-avatar bg-white text-success rounded-circle me-2"
+              >
+                <i class="bi bi-person-badge-fill fs-5"></i>
               </div>
-              <div class="profile-email text-white-50 small text-truncate">
-                <%= locals.userData ? userData.username : 'admin' %>
+              <div class="text-truncate">
+                <div class="fw-bold small text-white text-truncate">
+                  <%= locals.userData ? userData.fullname : 'Admin' %>
+                </div>
+                <div class="profile-email text-white-50 small text-truncate">
+                  <%= locals.userData ? userData.username : 'admin' %>
+                </div>
               </div>
-            </div>
+            </a>
           </div>
         </div>
       </div>
@@ -194,7 +200,6 @@
           </div>
         </div>
 
-        <!-- // 3 Card Kotak Statistik Dummy -->
         <div class="p-3 p-md-4 flex-grow-1">
           <div class="row g-3 g-md-4">
             <div class="col-12 col-sm-6 col-md-4">
