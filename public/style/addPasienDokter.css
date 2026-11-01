@@ -1,0 +1,44 @@
+/* ==========================================
+   CSS KHUSUS HALAMAN TAMBAH PASIEN KE DOKTER
+   ========================================== */
+
+/* Styling Custom Searchable Dropdown */
+.custom-search-dropdown {
+  position: relative;
+}
+
+.dropdown-list-box {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: #fff;
+  border: 1px solid #ced4da;
+  border-top: none;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 1000;
+  display: none;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-item-custom {
+  padding: 10px 14px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  border-bottom: 1px solid #f1f1f1;
+}
+
+.dropdown-item-custom:hover {
+  background-color: #f8f9fa;
+  color: #198754;
+}
+
+.no-result {
+  padding: 10px 14px;
+  color: #6c757d;
+  font-size: 0.9rem;
+  text-align: center;
+}

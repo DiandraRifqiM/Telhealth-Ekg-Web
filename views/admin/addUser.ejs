@@ -3,7 +3,9 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Tambah Pengguna - Admin Dashboard</title>
+    <title><%= title %></title>
+
+    <!-- CSS External -->
     <link rel="stylesheet" href="/style/adminDashboard.css" />
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
@@ -14,9 +16,10 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
     />
   </head>
+
   <body class="bg-light">
-    <div class="d-flex min-vh-100 overflow-hidden">
-      <!-- // SIDEBAR DESKTOP -->
+    <div class="main-container">
+      <!-- SIDEBAR DESKTOP -->
       <div
         class="sidebar d-none d-md-flex flex-column p-3 bg-success text-white"
       >
@@ -27,61 +30,83 @@
           <i class="bi bi-shield-lock-fill fs-3 me-2"></i>
           <span class="fs-5 fw-bold">Admin Dashboard</span>
         </a>
+
         <hr class="sidebar-divider" />
+
         <ul class="nav nav-pills flex-column mb-auto">
           <li class="nav-item mb-1">
             <a
               href="/adminDashboard"
-              class="nav-link rounded-3 py-2 px-3 fw-semibold <%= locals.activeTab === 'dashboard' ? 'active' : 'text-white' %>"
+              class="nav-link text-white rounded-3 py-2 px-3 fw-semibold"
             >
-              <i class="bi bi-bar-chart-line-fill me-3 fs-5"></i> Dashboard
+              <i class="bi bi-bar-chart-line-fill me-3 fs-5"></i>
+              Dashboard
             </a>
           </li>
+
           <li class="nav-item mb-1">
             <a
               href="/adminDashboard/pasien"
-              class="nav-link rounded-3 py-2 px-3 fw-semibold <%= locals.activeTab === 'pasien' ? 'active' : 'text-white' %>"
+              class="nav-link text-white rounded-3 py-2 px-3 fw-semibold"
             >
-              <i class="bi bi-people-fill me-3 fs-5"></i> Daftar Pasien
+              <i class="bi bi-people-fill me-3 fs-5"></i>
+              Daftar Pasien
             </a>
           </li>
+
           <li class="nav-item mb-1">
             <a
               href="/adminDashboard/dokter"
-              class="nav-link rounded-3 py-2 px-3 fw-semibold <%= locals.activeTab === 'dokter' ? 'active' : 'text-white' %>"
+              class="nav-link text-white rounded-3 py-2 px-3 fw-semibold"
             >
-              <i class="bi bi-heart-pulse-fill me-3 fs-5"></i> Daftar Dokter
+              <i class="bi bi-heart-pulse-fill me-3 fs-5"></i>
+              Daftar Dokter
             </a>
           </li>
+
           <li class="nav-item mb-1">
             <a
               href="/adminDashboard/admin"
-              class="nav-link rounded-3 py-2 px-3 fw-semibold <%= locals.activeTab === 'admin' ? 'active' : 'text-white' %>"
+              class="nav-link text-white rounded-3 py-2 px-3 fw-semibold"
             >
-              <i class="bi bi-person-badge-fill me-3 fs-5"></i> Daftar Admin
+              <i class="bi bi-person-badge-fill me-3 fs-5"></i>
+              Daftar Admin
             </a>
           </li>
+
           <li class="nav-item mb-1">
             <a
               href="/addUser"
-              class="nav-link rounded-3 py-2 px-3 fw-semibold <%= locals.activeTab === 'addUser' ? 'active' : 'text-white' %>"
+              class="nav-link active rounded-3 py-2 px-3 fw-semibold"
             >
-              <i class="bi bi-person-plus-fill me-3 fs-5"></i> Tambah Pengguna
+              <i class="bi bi-person-plus-fill me-3 fs-5"></i>
+              Tambah Pengguna
             </a>
           </li>
         </ul>
+
         <hr class="sidebar-divider" />
+
         <div>
-          <a href="/admin/profile" class="sidebar-profile-link">
+          <a
+            href="/admin/profile"
+            class="sidebar-profile-link text-decoration-none text-white"
+          >
             <div
-              class="profile-avatar bg-white text-success rounded-circle me-2"
+              class="profile-avatar bg-white text-success rounded-circle me-2 d-inline-flex align-items-center justify-content-center"
+              style="width: 40px; height: 40px"
             >
               <i class="bi bi-person-badge-fill fs-5"></i>
             </div>
-            <div class="text-truncate">
+
+            <div
+              class="text-truncate d-inline-block align-middle"
+              style="max-width: 170px"
+            >
               <div class="fw-bold small text-white text-truncate">
                 <%= locals.userData ? userData.fullname : 'Admin' %>
               </div>
+
               <div class="profile-email text-white-50 small text-truncate">
                 <%= locals.userData ? userData.username : 'admin' %>
               </div>
@@ -90,7 +115,7 @@
         </div>
       </div>
 
-      <!-- // SIDEBAR MOBILE (OFFCANVAS) -->
+      <!-- SIDEBAR MOBILE -->
       <div
         class="offcanvas offcanvas-start bg-success text-white sidebar-mobile"
         tabindex="-1"
@@ -100,69 +125,92 @@
           class="offcanvas-header border-bottom border-light border-opacity-25 px-4 pt-4"
         >
           <h5 class="offcanvas-title fw-bold">
-            <i class="bi bi-shield-lock-fill me-2"></i> Admin Dashboard
+            <i class="bi bi-shield-lock-fill me-2"></i>
+            Admin Dashboard
           </h5>
+
           <button
             type="button"
             class="btn-close btn-close-white"
             data-bs-dismiss="offcanvas"
           ></button>
         </div>
+
         <div class="offcanvas-body d-flex flex-column p-3">
           <ul class="nav nav-pills flex-column mb-auto">
             <li class="nav-item mb-1">
               <a
                 href="/adminDashboard"
-                class="nav-link rounded-3 py-2 px-3 fw-semibold <%= locals.activeTab === 'dashboard' ? 'active' : 'text-white' %>"
+                class="nav-link text-white rounded-3 py-2 px-3 fw-semibold"
               >
-                <i class="bi bi-bar-chart-line-fill me-3 fs-5"></i> Dashboard
+                <i class="bi bi-bar-chart-line-fill me-3 fs-5"></i>
+                Dashboard
               </a>
             </li>
+
             <li class="nav-item mb-1">
               <a
                 href="/adminDashboard/pasien"
-                class="nav-link rounded-3 py-2 px-3 fw-semibold <%= locals.activeTab === 'pasien' ? 'active' : 'text-white' %>"
+                class="nav-link text-white rounded-3 py-2 px-3 fw-semibold"
               >
-                <i class="bi bi-people-fill me-3 fs-5"></i> Daftar Pasien
+                <i class="bi bi-people-fill me-3 fs-5"></i>
+                Daftar Pasien
               </a>
             </li>
+
             <li class="nav-item mb-1">
               <a
                 href="/adminDashboard/dokter"
-                class="nav-link rounded-3 py-2 px-3 fw-semibold <%= locals.activeTab === 'dokter' ? 'active' : 'text-white' %>"
+                class="nav-link text-white rounded-3 py-2 px-3 fw-semibold"
               >
-                <i class="bi bi-heart-pulse-fill me-3 fs-5"></i> Daftar Dokter
+                <i class="bi bi-heart-pulse-fill me-3 fs-5"></i>
+                Daftar Dokter
               </a>
             </li>
+
             <li class="nav-item mb-1">
               <a
                 href="/adminDashboard/admin"
-                class="nav-link rounded-3 py-2 px-3 fw-semibold <%= locals.activeTab === 'admin' ? 'active' : 'text-white' %>"
+                class="nav-link text-white rounded-3 py-2 px-3 fw-semibold"
               >
-                <i class="bi bi-person-badge-fill me-3 fs-5"></i> Daftar Admin
+                <i class="bi bi-person-badge-fill me-3 fs-5"></i>
+                Daftar Admin
               </a>
             </li>
+
             <li class="nav-item mb-1">
               <a
                 href="/addUser"
-                class="nav-link rounded-3 py-2 px-3 fw-semibold <%= locals.activeTab === 'addUser' ? 'active' : 'text-white' %>"
+                class="nav-link active rounded-3 py-2 px-3 fw-semibold"
               >
-                <i class="bi bi-person-plus-fill me-3 fs-5"></i> Tambah Pengguna
+                <i class="bi bi-person-plus-fill me-3 fs-5"></i>
+                Tambah Pengguna
               </a>
             </li>
           </ul>
+
           <hr class="border-light border-opacity-25" />
+
           <div>
-            <a href="/admin/profile" class="sidebar-profile-link">
+            <a
+              href="/admin/profile"
+              class="sidebar-profile-link text-decoration-none text-white"
+            >
               <div
-                class="profile-avatar bg-white text-success rounded-circle me-2"
+                class="profile-avatar bg-white text-success rounded-circle me-2 d-inline-flex align-items-center justify-content-center"
+                style="width: 40px; height: 40px"
               >
                 <i class="bi bi-person-badge-fill fs-5"></i>
               </div>
-              <div class="text-truncate">
+
+              <div
+                class="text-truncate d-inline-block align-middle"
+                style="max-width: 170px"
+              >
                 <div class="fw-bold small text-white text-truncate">
                   <%= locals.userData ? userData.fullname : 'Admin' %>
                 </div>
+
                 <div class="profile-email text-white-50 small text-truncate">
                   <%= locals.userData ? userData.username : 'admin' %>
                 </div>
@@ -172,10 +220,11 @@
         </div>
       </div>
 
-      <!-- // KONTEN UTAMA -->
-      <div class="flex-grow-1 bg-light d-flex flex-column h-100 overflow-auto">
+      <!-- KONTEN UTAMA -->
+      <div class="main-content bg-light">
+        <!-- TOPBAR -->
         <div
-          class="bg-white border-bottom px-3 px-md-4 py-3 d-flex justify-content-between align-items-center shadow-sm"
+          class="topbar bg-white border-bottom px-3 px-md-4 py-3 d-flex justify-content-between align-items-center shadow-sm"
         >
           <div class="d-flex align-items-center">
             <button
@@ -186,42 +235,46 @@
             >
               <i class="bi bi-list fs-5"></i>
             </button>
+
             <h4 class="fw-bold text-dark m-0 fs-5 fs-md-4">Tambah Pengguna</h4>
           </div>
+
           <div>
             <form action="/logout" method="POST" class="m-0">
               <button
                 type="submit"
                 class="btn btn-outline-danger btn-sm fw-semibold d-flex align-items-center"
               >
-                <i class="bi bi-box-arrow-right me-2"></i> Logout
+                <i class="bi bi-box-arrow-right me-2"></i>
+                Logout
               </button>
             </form>
           </div>
         </div>
 
-        <!-- // Menggunakan class form-container-scroll agar posisi form naik ke atas & aman dari terpotong -->
-        <div
-          class="p-3 p-md-4 flex-grow-1 d-flex flex-column align-items-center form-container-scroll"
-        >
+        <!-- FORM CONTAINER -->
+        <div class="form-container p-3 p-md-4">
           <div
             class="card border-0 shadow-sm rounded-4 p-4 w-100 mb-4"
             style="max-width: 600px"
           >
-            <div class="mb-3">
+            <div class="mb-4">
               <h5 class="fw-bold text-dark mb-1 fs-5">
                 Form Registrasi Akun Baru
               </h5>
+
               <p class="text-muted small mb-0">
                 Masukkan informasi lengkap pengguna baru ke dalam sistem.
               </p>
             </div>
 
+            <!-- FORM REGISTRASI -->
             <form action="/addUser" method="POST">
               <div class="mb-3">
-                <label for="username" class="form-label fw-semibold small"
-                  >Username</label
-                >
+                <label for="username" class="form-label fw-semibold small">
+                  Username
+                </label>
+
                 <input
                   type="text"
                   class="form-control"
@@ -233,9 +286,10 @@
               </div>
 
               <div class="mb-3">
-                <label for="fullname" class="form-label fw-semibold small"
-                  >Nama Lengkap</label
-                >
+                <label for="fullname" class="form-label fw-semibold small">
+                  Nama Lengkap
+                </label>
+
                 <input
                   type="text"
                   class="form-control"
@@ -247,9 +301,10 @@
               </div>
 
               <div class="mb-3">
-                <label for="dob" class="form-label fw-semibold small"
-                  >Tanggal Lahir</label
-                >
+                <label for="dob" class="form-label fw-semibold small">
+                  Tanggal Lahir
+                </label>
+
                 <input
                   type="date"
                   class="form-control"
@@ -259,10 +314,67 @@
                 />
               </div>
 
+              <!-- JENIS KELAMIN -->
               <div class="mb-3">
-                <label for="role" class="form-label fw-semibold small"
-                  >Peran (Role)</label
+                <label for="gender" class="form-label fw-semibold small">
+                  Jenis Kelamin
+                </label>
+
+                <select class="form-select" id="gender" name="gender" required>
+                  <option value="" selected disabled>
+                    -- Pilih Jenis Kelamin --
+                  </option>
+
+                  <option value="Laki-laki">Laki-laki</option>
+                  <option value="Perempuan">Perempuan</option>
+                </select>
+              </div>
+
+              <!-- GOLONGAN DARAH -->
+              <div class="mb-3">
+                <label for="bloodType" class="form-label fw-semibold small">
+                  Golongan Darah
+                </label>
+
+                <select
+                  class="form-select"
+                  id="bloodType"
+                  name="bloodType"
+                  required
                 >
+                  <option value="" selected disabled>
+                    -- Pilih Golongan Darah --
+                  </option>
+
+                  <option value="A">A</option>
+                  <option value="B">B</option>
+                  <option value="AB">AB</option>
+                  <option value="O">O</option>
+                </select>
+              </div>
+
+              <!-- NOMOR TELEPON -->
+              <div class="mb-3">
+                <label for="phone" class="form-label fw-semibold small">
+                  Nomor Telepon / WA
+                </label>
+
+                <input
+                  type="text"
+                  class="form-control"
+                  id="phone"
+                  name="phone"
+                  placeholder="Contoh: 081234567890"
+                  required
+                />
+              </div>
+
+              <!-- ROLE -->
+              <div class="mb-3">
+                <label for="role" class="form-label fw-semibold small">
+                  Peran (Role)
+                </label>
+
                 <select class="form-select" id="role" name="role" required>
                   <option value="pasien">Pasien</option>
                   <option value="dokter">Dokter</option>
@@ -270,10 +382,12 @@
                 </select>
               </div>
 
+              <!-- PASSWORD -->
               <div class="mb-3">
-                <label for="password" class="form-label fw-semibold small"
-                  >Password</label
-                >
+                <label for="password" class="form-label fw-semibold small">
+                  Password
+                </label>
+
                 <input
                   type="password"
                   class="form-control"
@@ -284,10 +398,12 @@
                 />
               </div>
 
-              <div class="mb-3">
-                <label for="password2" class="form-label fw-semibold small"
-                  >Konfirmasi Password</label
-                >
+              <!-- KONFIRMASI PASSWORD -->
+              <div class="mb-4">
+                <label for="password2" class="form-label fw-semibold small">
+                  Konfirmasi Password
+                </label>
+
                 <input
                   type="password"
                   class="form-control"
@@ -298,17 +414,21 @@
                 />
               </div>
 
-              <div class="d-flex justify-content-end gap-2 pt-2 border-top">
+              <!-- TOMBOL -->
+              <div class="d-flex justify-content-end gap-2 pt-3 border-top">
                 <a
                   href="/adminDashboard"
                   class="btn btn-outline-secondary btn-sm fw-semibold px-4"
-                  >Batal</a
                 >
+                  Batal
+                </a>
+
                 <button
                   type="submit"
                   class="btn btn-success btn-sm fw-semibold px-4"
                 >
-                  <i class="bi bi-person-plus-fill me-2"></i> Simpan User
+                  <i class="bi bi-person-plus-fill me-1"></i>
+                  Simpan User
                 </button>
               </div>
             </form>
@@ -316,6 +436,8 @@
         </div>
       </div>
     </div>
+
+    <!-- BOOTSTRAP JAVASCRIPT -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>
