@@ -22,6 +22,9 @@ const addUser = async (userData) => {
       username: userData.username,
       fullname: userData.fullname,
       dob: userData.dob,
+      gender: userData.gender,
+      bloodType: userData.bloodType,
+      phone: userData.phone,
       password: userData.password,
       role: userData.role,
     });
@@ -244,6 +247,31 @@ const delUser = async (id) => {
   }
 };
 
+const updateUser = async (id, userData) => {
+  try {
+    const updateData = {
+      username: userData.username,
+      fullname: userData.fullname,
+      dob: userData.dob,
+      gender: userData.gender,
+      bloodType: userData.bloodType,
+      phone: userData.phone,
+      role: userData.role,
+    };
+
+    if (userData.password !== undefined) {
+      updateData.password = userData.password;
+    }
+
+    await db.collection("users").doc(id).update(updateData);
+
+    return true;
+  } catch (error) {
+    console.log("Fetch Error!!", error);
+    throw error;
+  }
+};
+
 module.exports = {
   addUser,
   validateUser,
@@ -254,5 +282,6 @@ module.exports = {
   searchPasien,
   searchDokter,
   searchAdmin,
+  updateUser,
   delUser,
 };

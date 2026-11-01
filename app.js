@@ -20,8 +20,14 @@ const {
   searchPasien,
   searchDokter,
   searchAdmin,
+  updateUser,
   delUser,
 } = require("./services/userService");
+
+// patient
+const { addPatient } = require("./services/patientList");
+
+// Db
 const { db } = require("./utils/db");
 
 // EJS Setup
@@ -49,7 +55,7 @@ app.use(
     secret: "secret",
     resave: false,
     saveUninitialized: false,
-  }),
+  })
 );
 app.use(flash());
 
@@ -172,43 +178,128 @@ app.get("/adminDashboard", isAuth, authRole("admin"), async (req, res) => {
 });
 
 // Halaman Profil Admin
-app.get("/admin/profile", isAuth, authRole("admin"), async (req, res) => {
-  const userId = req.session.userId;
-  const userData = await getUserData(userId);
-  res.render("admin/profilAdmin", {
-    title: "Profil Admin",
-    userData,
-    activeTab: "profile",
-  });
-});
-
-// Halaman Detail Pengguna (Admin)
-app.get("/admin/user/:id", isAuth, authRole("admin"), async (req, res) => {
-  try {
+app.get(
+  "/adminDashboard/profile",
+  isAuth,
+  authRole("admin"),
+  async (req, res) => {
     const userId = req.session.userId;
     const userData = await getUserData(userId);
-    const targetUserId = req.params.id;
-    const targetUser = await getUserData(targetUserId);
-
-    res.render("admin/detailUser", {
-      title: "Detail Pengguna - Admin Dashboard",
+    res.render("admin/profilAdmin", {
+      title: "Profil Admin",
       userData,
-      targetUser,
-      activeTab: "dashboard",
+      activeTab: "profile",
     });
+  }
+);
+
+// Halaman Detail Pengguna (Admin)
+app.get(
+  "/adminDashboard/user/:id",
+  isAuth,
+  authRole("admin"),
+  async (req, res) => {
+    try {
+      const userId = req.session.userId;
+      const userData = await getUserData(userId);
+      const targetUserId = req.params.id;
+      const targetUser = await getUserData(targetUserId);
+
+      res.render("admin/detailUser", {
+        title: "Detail Pengguna - Admin Dashboard",
+        userData,
+        targetUser,
+        activeTab: "dashboard",
+      });
+    } catch (error) {
+      console.log("Gagal memuat detail user:", error.message);
+      res.redirect("/adminDashboard");
+    }
+  }
+);
+
+// Update User Data
+app.put("/adminDashboard/user", isAuth, authRole("admin"), async (req, res) => {
+  try {
+    const {
+      userId,
+      oldUname,
+      username,
+      fullname,
+      dob,
+      gender,
+      bloodType,
+      oldPhone,
+      phone,
+      password,
+      role,
+    } = req.body;
+
+    if (!userId) {
+      return res.status(400).send("User tidak ada");
+    }
+
+    // Username existing check
+    if (username !== oldUname) {
+      const checkUname = await db
+        .collection("users")
+        .where("username", "==", username)
+        .limit(1)
+        .get();
+      if (!checkUname.empty) {
+        return res.redirect(`/adminDashboard/user/${userId}`);
+      }
+    }
+
+    // Phone existing check
+    if (phone !== oldPhone) {
+      const checkPhone = await db
+        .collection("users")
+        .where("phone", "==", phone)
+        .limit(1)
+        .get();
+      if (!checkPhone.empty) {
+        return res.redirect(`/adminDashboard/user/${userId}`);
+      }
+    }
+
+    if (username !== oldUname) {
+      const checkUname = await db
+        .collection("users")
+        .where("username", "==", username)
+        .limit(1)
+        .get();
+      if (!checkUname.empty) {
+        console.log("Username sudah digunakan!!");
+        return res.redirect(`/adminDashboard/user/${userId}`);
+      }
+    }
+
+    const userData = {
+      username,
+      fullname,
+      dob,
+      gender,
+      bloodType,
+      phone: phone?.trim() || "",
+      role,
+    };
+
+    if (password && password.trim() !== "") {
+      userData.password = await bcrypt.hash(password, 12);
+    }
+    await updateUser(userId, userData);
+
+    res.redirect(`/adminDashboard/user/${userId}`);
   } catch (error) {
-    console.log("Gagal memuat detail user:", error.message);
-    res.redirect("/adminDashboard");
+    console.log("Update User Error:", error);
+    res.status(500).send("Gagal memperbarui data pengguna");
   }
 });
 
-// ==========================================
-// RUTE TAMBAHAN: Add Pasien ke Dokter
-// ==========================================
-
-// 1. Render Halaman Form Add Pasien ke Dokter
+// Halaman tambah pasien ke dokter
 app.get(
-  "/admin/dokter/add-pasien/:id",
+  "/adminDashboard/dokter/add-pasien/:id",
   isAuth,
   authRole("admin"),
   async (req, res) => {
@@ -217,50 +308,39 @@ app.get(
       const userData = await getUserData(userId);
       const targetDokterId = req.params.id;
       const targetDokter = await getUserData(targetDokterId);
-
-      // Ambil data list pasien untuk opsi dropdown
-      const { getPasienData: pasienList } = await getPasienList();
+      const { getPasienData } = await getPasienList();
 
       res.render("admin/addPasienDokter", {
         title: "Tambah Pasien ke Dokter",
         userData,
         targetDokter,
-        pasienList,
+        getPasienData,
         activeTab: "dokter",
       });
     } catch (error) {
       console.log("Gagal memuat halaman add pasien dokter:", error.message);
       res.redirect("/adminDashboard/dokter");
     }
-  },
+  }
 );
-
-// 2. Proses Simpan Relasi Pasien ke Dokter
+// Proses tambah pasien ke dokter
 app.post(
-  "/admin/dokter/add-pasien/:id",
+  "/adminDashboard/dokter/add-pasien",
   isAuth,
   authRole("admin"),
   async (req, res) => {
     try {
-      const dokterId = req.params.id;
-      const { pasien_id, catatan } = req.body;
-
-      // Menyimpan relasi dokterId ke dokumen pasien di Firestore
-      await db
-        .collection("users")
-        .doc(pasien_id)
-        .update({
-          doctorId: dokterId,
-          catatanMedisAwal: catatan || "",
-        });
-
-      console.log("Pasien berhasil dihubungkan ke dokter!");
-      res.redirect("/adminDashboard/dokter");
+      const { dokterId, pasienId } = req.body;
+      const data = {
+        dokterId,
+        pasienId,
+      };
+      await addPatient(data);
+      res.redirect("/adminDashboard/dokter/");
     } catch (error) {
-      console.log("Gagal menghubungkan pasien:", error.message);
-      res.status(500).send("Error: " + error.message);
+      console.log("Gagal menambah pasien", error);
     }
-  },
+  }
 );
 
 // ==========================================
@@ -283,7 +363,7 @@ app.get(
       getPasienData,
       activeTab: "pasien",
     });
-  },
+  }
 );
 
 // Daftar Dokter
@@ -304,7 +384,7 @@ app.get(
       getDokterData,
       activeTab: "dokter",
     });
-  },
+  }
 );
 
 // Daftar Admin
@@ -325,24 +405,39 @@ app.get(
       getAdminData,
       activeTab: "admin",
     });
-  },
+  }
 );
 
 // Add User
-app.get("/addUser", isAuth, authRole("admin"), async (req, res) => {
-  const userId = req.session.userId;
-  const userData = await getUserData(userId);
-  res.render("admin/addUser", {
-    title: "Add User",
-    userData,
-    activeTab: "addUser",
-  });
-});
+app.get(
+  "/adminDashboard/addUser",
+  isAuth,
+  authRole("admin"),
+  async (req, res) => {
+    const userId = req.session.userId;
+    const userData = await getUserData(userId);
+    res.render("admin/addUser", {
+      title: "Add User",
+      userData,
+      activeTab: "addUser",
+    });
+  }
+);
 
 // proccess addUser
-app.post("/addUser", async (req, res) => {
+app.post("/adminDashboard/addUser", async (req, res) => {
   try {
-    const { username, fullname, dob, password, password2, role } = req.body;
+    const {
+      username,
+      fullname,
+      dob,
+      gender,
+      bloodType,
+      phone,
+      password,
+      password2,
+      role,
+    } = req.body;
 
     const checkUname = await db
       .collection("users")
@@ -350,8 +445,14 @@ app.post("/addUser", async (req, res) => {
       .limit(1)
       .get();
 
-    if (!checkUname.empty) {
-      console.log("Username sudah ada!!");
+    const CheckPhone = await db
+      .collection("users")
+      .where("phone", "==", phone)
+      .limit(1)
+      .get();
+
+    if (!checkUname.empty || !CheckPhone.empty) {
+      console.log("Username atau no telepon sudah ada!!");
       return res.redirect("/addUser");
     }
 
@@ -366,6 +467,9 @@ app.post("/addUser", async (req, res) => {
       username: username,
       fullname: fullname,
       dob: dob,
+      gender: gender,
+      bloodType: bloodType,
+      phone: phone,
       password: hashedPassword,
       role: role,
     });

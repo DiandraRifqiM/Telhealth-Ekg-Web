@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -226,10 +226,7 @@
                       <span class="text-muted small d-block mb-1"
                         >Tanggal Lahir</span
                       >
-                      <strong class="text-dark"
-                        ><%= userData.birthdate || '15 Mei 1998 (Dummy)'
-                        %></strong
-                      >
+                      <strong class="text-dark"><%= userData.dob %></strong>
                     </div>
                   </div>
 
@@ -239,9 +236,7 @@
                       <span class="text-muted small d-block mb-1"
                         >Jenis Kelamin</span
                       >
-                      <strong class="text-dark"
-                        ><%= userData.gender || 'Laki-laki (Dummy)' %></strong
-                      >
+                      <strong class="text-dark"><%= userData.gender %></strong>
                     </div>
                   </div>
 
@@ -252,7 +247,7 @@
                         >Golongan Darah</span
                       >
                       <strong class="text-dark"
-                        ><%= userData.bloodType || 'O+ (Dummy)' %></strong
+                        ><%= userData.bloodType %></strong
                       >
                     </div>
                   </div>
@@ -264,8 +259,7 @@
                         >Nomor Telepon / WA</span
                       >
                       <strong class="text-dark"
-                        ><%= userData.phone || '0812-3456-7890 (Dummy)'
-                        %></strong
+                        ><%= userData.phone || '-' %></strong
                       >
                     </div>
                   </div>

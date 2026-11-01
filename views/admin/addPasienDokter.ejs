@@ -65,7 +65,7 @@
           </li>
           <li class="nav-item mb-1">
             <a
-              href="/addUser"
+              href="/adminDashboard/addUser"
               class="nav-link rounded-3 py-2 px-3 fw-semibold text-white"
             >
               <i class="bi bi-person-plus-fill me-3 fs-5"></i> Tambah Pengguna
@@ -74,8 +74,10 @@
         </ul>
         <hr class="sidebar-divider" />
         <div>
-          <a href="/admin/profile" class="sidebar-profile-link">
-            <div class="profile-avatar bg-white text-success rounded-circle me-2">
+          <a href="/adminDashboard/profile" class="sidebar-profile-link">
+            <div
+              class="profile-avatar bg-white text-success rounded-circle me-2"
+            >
               <i class="bi bi-person-badge-fill fs-5"></i>
             </div>
             <div class="text-truncate">
@@ -144,7 +146,7 @@
             </li>
             <li class="nav-item mb-1">
               <a
-                href="/addUser"
+                href="/adminDashboard/addUser"
                 class="nav-link rounded-3 py-2 px-3 fw-semibold text-white"
               >
                 <i class="bi bi-person-plus-fill me-3 fs-5"></i> Tambah Pengguna
@@ -153,7 +155,7 @@
           </ul>
           <hr class="border-light border-opacity-25" />
           <div>
-            <a href="/admin/profile" class="sidebar-profile-link">
+            <a href="/adminDashboard/profile" class="sidebar-profile-link">
               <div
                 class="profile-avatar bg-white text-success rounded-circle me-2"
               >
@@ -186,7 +188,9 @@
             >
               <i class="bi bi-list fs-5"></i>
             </button>
-            <h4 class="fw-bold text-dark m-0 fs-5 fs-md-4">Tambah Pasien ke Dokter</h4>
+            <h4 class="fw-bold text-dark m-0 fs-5 fs-md-4">
+              Tambah Pasien ke Dokter
+            </h4>
           </div>
           <div>
             <form action="/logout" method="POST" class="m-0">
@@ -218,29 +222,44 @@
             </div>
 
             <div class="mb-3">
-              <h5 class="fw-bold text-dark mb-1 fs-5">
-                Form Penugasan Pasien
-              </h5>
+              <h5 class="fw-bold text-dark mb-1 fs-5">Form Penugasan Pasien</h5>
               <p class="text-muted small mb-0">
                 Pilih pasien yang akan dihubungkan ke dokter penanggung jawab.
               </p>
             </div>
 
             <!-- Informasi Dokter Tujuan -->
-            <div class="alert alert-success d-flex align-items-center mb-4 py-2 px-3 small">
+            <div
+              class="alert alert-success d-flex align-items-center mb-4 py-2 px-3 small"
+            >
               <i class="bi bi-heart-pulse-fill fs-5 me-2"></i>
               <div>
-                Dokter: <strong class="text-uppercase"><%= targetDokter.fullname %></strong> (<%= targetDokter.username %>)
+                Dokter:
+                <strong class="text-uppercase"
+                  ><%= targetDokter.fullname %></strong
+                >
+                (<%= targetDokter.username %>)
               </div>
             </div>
 
             <!-- Form Submit Add Pasien -->
-            <form action="/admin/dokter/add-pasien/<%= targetDokter.id || targetDokter.userId %>" method="POST">
-              
+            <form
+              action="/adminDashboard/dokter/add-pasien"
+              method="POST"
+              onsubmit="return confirm('Yakin ?')"
+            >
+              <!-- Dokter Id -->
+              <input
+                type="hidden"
+                name="dokterId"
+                value="<%= targetDokter.id %>"
+              />
               <!-- Custom Searchable Dropdown Pasien -->
               <div class="mb-4">
-                <label for="patientSearch" class="form-label fw-semibold small">Pilih Pasien</label>
-                
+                <label for="patientSearch" class="form-label fw-semibold small"
+                  >Pilih Pasien</label
+                >
+
                 <div class="custom-search-dropdown">
                   <input
                     type="text"
@@ -250,22 +269,28 @@
                     autocomplete="off"
                     required
                   />
-                  
-                  <input type="hidden" id="pasien_id" name="pasien_id" required />
+
+                  <input
+                    type="hidden"
+                    id="pasien_id"
+                    name="pasienId"
+                    required
+                  />
 
                   <div id="patientDropdownList" class="dropdown-list-box">
-                    <% if (pasienList && pasienList.length > 0) { %>
-                      <% pasienList.forEach(pasien => { %>
-                        <div
-                          class="dropdown-item-custom"
-                          data-id="<%= pasien.id || pasien.userId %>"
-                          data-text="<%= pasien.fullname %> (<%= pasien.username %>)"
-                        >
-                          <strong><%= pasien.fullname %></strong> (<%= pasien.username %>)
-                        </div>
-                      <% }) %>
-                    <% } else { %>
-                      <div class="no-result">Tidak ada pasien tersedia</div>
+                    <% if (getPasienData && getPasienData.length > 0) { %> <%
+                    getPasienData.forEach(pasien => { %>
+                    <div
+                      class="dropdown-item-custom"
+                      data-id="<%= pasien.userId %>"
+                      data-value="<%= pasien.userId %>"
+                      data-text="<%= pasien.fullname %> (<%= pasien.username %>)"
+                    >
+                      <strong><%= pasien.fullname %></strong> (<%=
+                      pasien.username %>)
+                    </div>
+                    <% }) %> <% } else { %>
+                    <div class="no-result">Tidak ada pasien tersedia</div>
                     <% } %>
                   </div>
                 </div>
@@ -291,64 +316,80 @@
       </div>
     </div>
 
-    <!-- Script Interaksi Searchable Dropdown -->
+    // Script Interaksi Searchable Dropdown
     <script>
-      const searchInput = document.getElementById('patientSearch');
-      const hiddenInput = document.getElementById('pasien_id');
-      const dropdownList = document.getElementById('patientDropdownList');
-      const items = dropdownList.querySelectorAll('.dropdown-item-custom');
-      const noResultMsg = dropdownList.querySelector('.no-result') || createNoResultElement();
+      const searchInput = document.getElementById("patientSearch");
+      const hiddenInput = document.getElementById("pasien_id");
+      const dropdownList = document.getElementById("patientDropdownList");
+      const items = dropdownList.querySelectorAll(".dropdown-item-custom");
+      const form = hiddenInput.closest("form");
+
+      const noResultMsg =
+        dropdownList.querySelector(".no-result") || createNoResultElement();
 
       function createNoResultElement() {
-        const div = document.createElement('div');
-        div.className = 'no-result';
-        div.innerText = 'Pasien tidak ditemukan';
-        div.style.display = 'none';
+        const div = document.createElement("div");
+        div.className = "no-result";
+        div.innerText = "Pasien tidak ditemukan";
+        div.style.display = "none";
         dropdownList.appendChild(div);
         return div;
       }
 
-      searchInput.addEventListener('focus', () => {
-        dropdownList.style.display = 'block';
+      searchInput.addEventListener("focus", () => {
+        dropdownList.style.display = "block";
       });
 
-      searchInput.addEventListener('input', () => {
+      searchInput.addEventListener("input", () => {
         const keyword = searchInput.value.toLowerCase();
         let matchCount = 0;
 
-        dropdownList.style.display = 'block';
+        // Reset pasien yang sebelumnya dipilih
+        hiddenInput.value = "";
 
-        items.forEach(item => {
-          const text = item.getAttribute('data-text').toLowerCase();
+        dropdownList.style.display = "block";
+
+        items.forEach((item) => {
+          const text = item.getAttribute("data-text").toLowerCase();
+
           if (text.includes(keyword)) {
-            item.style.display = 'block';
+            item.style.display = "block";
             matchCount++;
           } else {
-            item.style.display = 'none';
+            item.style.display = "none";
           }
         });
 
-        if (matchCount === 0) {
-          noResultMsg.style.display = 'block';
-        } else {
-          noResultMsg.style.display = 'none';
-        }
+        noResultMsg.style.display = matchCount === 0 ? "block" : "none";
       });
 
-      items.forEach(item => {
-        item.addEventListener('click', () => {
-          const id = item.getAttribute('data-id');
-          const text = item.getAttribute('data-text');
+      items.forEach((item) => {
+        item.addEventListener("click", () => {
+          const id = item.getAttribute("data-id");
+          const text = item.getAttribute("data-text");
 
           searchInput.value = text;
           hiddenInput.value = id;
-          dropdownList.style.display = 'none';
+
+          dropdownList.style.display = "none";
         });
       });
 
-      document.addEventListener('click', (e) => {
-        if (!searchInput.contains(e.target) && !dropdownList.contains(e.target)) {
-          dropdownList.style.display = 'none';
+      // Pastikan pasien sudah dipilih sebelum submit
+      form.addEventListener("submit", (e) => {
+        if (!hiddenInput.value) {
+          e.preventDefault();
+          alert("Silakan pilih pasien terlebih dahulu!");
+          searchInput.focus();
+        }
+      });
+
+      document.addEventListener("click", (e) => {
+        if (
+          !searchInput.contains(e.target) &&
+          !dropdownList.contains(e.target)
+        ) {
+          dropdownList.style.display = "none";
         }
       });
     </script>

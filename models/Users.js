@@ -11,6 +11,18 @@ const userSchema = {
     type: "string",
     required: true,
   },
+  gender: {
+    type: "string",
+    required: true,
+  },
+  bloodType: {
+    type: "string",
+    required: true,
+  },
+  phone: {
+    type: "string",
+    required: false,
+  },
   password: {
     type: "string",
     required: true,

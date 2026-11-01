@@ -64,7 +64,7 @@
           </li>
           <li class="nav-item mb-1">
             <a
-              href="/addUser"
+              href="/adminDashboard/addUser"
               class="nav-link text-white rounded-3 py-2 px-3 fw-semibold"
             >
               <i class="bi bi-person-plus-fill me-3 fs-5"></i> Tambah Pengguna
@@ -73,7 +73,7 @@
         </ul>
         <hr class="sidebar-divider" />
         <div>
-          <a href="/admin/profile" class="sidebar-profile-link text-decoration-none text-white">
+          <a href="/adminDashboard/profile" class="sidebar-profile-link text-decoration-none text-white">
             <div
               class="profile-avatar bg-white text-success rounded-circle me-2 d-inline-flex align-items-center justify-content-center"
               style="width: 40px; height: 40px;"
@@ -146,7 +146,7 @@
             </li>
             <li class="nav-item mb-1">
               <a
-                href="/addUser"
+                href="/adminDashboard/addUser"
                 class="nav-link text-white rounded-3 py-2 px-3 fw-semibold"
               >
                 <i class="bi bi-person-plus-fill me-3 fs-5"></i> Tambah Pengguna
@@ -155,7 +155,7 @@
           </ul>
           <hr class="border-light border-opacity-25" />
           <div>
-            <a href="/admin/profile" class="sidebar-profile-link text-decoration-none text-white">
+            <a href="/adminDashboard/profile" class="sidebar-profile-link text-decoration-none text-white">
               <div
                 class="profile-avatar bg-white text-success rounded-circle me-2 d-inline-flex align-items-center justify-content-center"
                 style="width: 40px; height: 40px;"
@@ -217,7 +217,10 @@
           </div>
 
           <!-- FORM UPDATE PENGGUNA -->
-          <form action="/admin/user/update/<%= targetUser._id %>" method="POST" class="w-100" style="max-width: 950px;">
+                      
+          <form action="/adminDashboard/user?_method=PUT" method="POST" class="w-100" style="max-width: 950px;">
+            <input type="hidden" name="userId" value="<%= targetUser.id %>">
+
             <div class="row g-4 justify-content-center">
               
               <!-- CARD KIRI (AVATAR & STATUS) -->
@@ -242,7 +245,7 @@
 
                   <div class="text-start">
                     <span class="text-muted small d-block">ID Sistem</span>
-                    <small class="text-muted text-break"><%= targetUser._id %></small>
+                    <small class="text-muted text-break"><%= targetUser.id %></small>
                   </div>
                 </div>
               </div>
@@ -255,7 +258,9 @@
                   </h5>
 
                   <div class="row g-3">
+
                     <!-- Nama Lengkap -->
+                    <input type="hidden" name="oldName" value="<%= targetUser.fullname %>">
                     <div class="col-12">
                       <label for="fullname" class="form-label fw-semibold small">Nama Lengkap</label>
                       <input
@@ -269,6 +274,7 @@
                     </div>
 
                     <!-- Username -->
+                    <input type="hidden" name="oldUname" value="<%= targetUser.username %>">
                     <div class="col-12 col-md-6">
                       <label for="username" class="form-label fw-semibold small">Username</label>
                       <input
@@ -282,6 +288,7 @@
                     </div>
 
                     <!-- Tanggal Lahir -->
+                    <input type="hidden" name="oldDob" value="<%= targetUser.dob %>">
                     <div class="col-12 col-md-6">
                       <label for="dob" class="form-label fw-semibold small">Tanggal Lahir</label>
                       <input
@@ -289,12 +296,13 @@
                         class="form-control"
                         id="dob"
                         name="dob"
-                        value="<%= targetUser.dob || targetUser.birthdate || '' %>"
+                        value="<%= targetUser.dob %>"
                         required
                       />
                     </div>
 
                     <!-- Jenis Kelamin -->
+                    <input type="hidden" name="oldGender" value="<%= targetUser.gender || '' %>">
                     <div class="col-12 col-md-6">
                       <label for="gender" class="form-label fw-semibold small">Jenis Kelamin</label>
                       <select class="form-select" id="gender" name="gender" required>
@@ -304,6 +312,7 @@
                     </div>
 
                     <!-- Golongan Darah -->
+                    <input type="hidden" name="oldBlood" value="<%= targetUser.bloodType || '' %>">
                     <div class="col-12 col-md-6">
                       <label for="bloodType" class="form-label fw-semibold small">Golongan Darah</label>
                       <select class="form-select" id="bloodType" name="bloodType" required>
@@ -314,7 +323,8 @@
                       </select>
                     </div>
 
-                    <!-- Nomor Telepon / WA -->
+                    <!-- Nomor Telepon -->
+                    <input type="hidden" name="oldPhone" value="<%= targetUser.phone || '' %>">
                     <div class="col-12 col-md-6">
                       <label for="phone" class="form-label fw-semibold small">Nomor Telepon / WA</label>
                       <input
@@ -324,11 +334,11 @@
                         name="phone"
                         value="<%= targetUser.phone || '' %>"
                         placeholder="Contoh: 081234567890"
-                        required
                       />
                     </div>
 
                     <!-- Role / Peran -->
+                    <input type="hidden" name="oldRole" value="<%= targetUser.role %>">
                     <div class="col-12 col-md-6">
                       <label for="role" class="form-label fw-semibold small">Peran (Role)</label>
                       <select class="form-select" id="role" name="role" required>
@@ -364,7 +374,7 @@
                       type="submit"
                       class="btn btn-success btn-sm fw-semibold px-4"
                     >
-                      <i class="bi bi-save-fill me-1"></i> Update Perubahan
+                      <i class="bi bi-save-fill me-1"></i> Simpan Perubahan
                     </button>
                   </div>
                 </div>
@@ -372,6 +382,7 @@
 
             </div>
           </form>
+
         </div>
       </div>
     </div>

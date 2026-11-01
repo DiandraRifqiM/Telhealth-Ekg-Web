@@ -76,7 +76,7 @@
 
           <li class="nav-item mb-1">
             <a
-              href="/addUser"
+              href="/adminDashboard/addUser"
               class="nav-link active rounded-3 py-2 px-3 fw-semibold"
             >
               <i class="bi bi-person-plus-fill me-3 fs-5"></i>
@@ -89,7 +89,7 @@
 
         <div>
           <a
-            href="/admin/profile"
+            href="/adminDashboard/profile"
             class="sidebar-profile-link text-decoration-none text-white"
           >
             <div
@@ -180,7 +180,7 @@
 
             <li class="nav-item mb-1">
               <a
-                href="/addUser"
+                href="/adminDashboard/addUser"
                 class="nav-link active rounded-3 py-2 px-3 fw-semibold"
               >
                 <i class="bi bi-person-plus-fill me-3 fs-5"></i>
@@ -193,7 +193,7 @@
 
           <div>
             <a
-              href="/admin/profile"
+              href="/adminDashboard/profile"
               class="sidebar-profile-link text-decoration-none text-white"
             >
               <div
@@ -269,7 +269,7 @@
             </div>
 
             <!-- FORM REGISTRASI -->
-            <form action="/addUser" method="POST">
+            <form action="/adminDashboard/addUser" method="POST">
               <div class="mb-3">
                 <label for="username" class="form-label fw-semibold small">
                   Username
@@ -322,7 +322,7 @@
 
                 <select class="form-select" id="gender" name="gender" required>
                   <option value="" selected disabled>
-                    -- Pilih Jenis Kelamin --
+                    Pilih Jenis Kelamin
                   </option>
 
                   <option value="Laki-laki">Laki-laki</option>
@@ -343,7 +343,7 @@
                   required
                 >
                   <option value="" selected disabled>
-                    -- Pilih Golongan Darah --
+                    Pilih Golongan Darah
                   </option>
 
                   <option value="A">A</option>
@@ -365,7 +365,7 @@
                   id="phone"
                   name="phone"
                   placeholder="Contoh: 081234567890"
-                  required
+                  value="<%= typeof value !== 'undefined' ? value : '' %>"
                 />
               </div>
 

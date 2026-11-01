@@ -59,7 +59,7 @@
           </li>
           <li class="nav-item mb-1">
             <a
-              href="/addUser"
+              href="/adminDashboard/addUser"
               class="nav-link text-white rounded-3 py-2 px-3 fw-semibold"
               ><i class="bi bi-person-plus-fill me-3 fs-5"></i> Tambah
               Pengguna</a
@@ -68,8 +68,10 @@
         </ul>
         <hr class="sidebar-divider" />
         <div>
-          <a href="/admin/profile" class="sidebar-profile-link">
-            <div class="profile-avatar bg-white text-success rounded-circle me-2">
+          <a href="/adminDashboard/profile" class="sidebar-profile-link">
+            <div
+              class="profile-avatar bg-white text-success rounded-circle me-2"
+            >
               <i class="bi bi-person-badge-fill fs-5"></i>
             </div>
             <div class="text-truncate">
@@ -137,7 +139,7 @@
             </li>
             <li class="nav-item mb-1">
               <a
-                href="/addUser"
+                href="/adminDashboard/addUser"
                 class="nav-link text-white rounded-3 py-2 px-3 fw-semibold"
                 ><i class="bi bi-person-plus-fill me-3 fs-5"></i> Tambah
                 Pengguna</a
@@ -146,7 +148,7 @@
           </ul>
           <hr class="border-light border-opacity-25" />
           <div>
-            <a href="/admin/profile" class="sidebar-profile-link">
+            <a href="/adminDashboard/profile" class="sidebar-profile-link">
               <div
                 class="profile-avatar bg-white text-success rounded-circle me-2"
               >
@@ -242,17 +244,17 @@
                     Dokter tidak ditemukan.
                   </td>
                 </tr>
-                <% } else { %> <% getDokterData.forEach((dokter, id) => { %>
+                <% } else { %> <% getDokterData.forEach((dokter, num) => { %>
                 <tbody>
                   <tr>
-                    <th><%= id+=1 %></th>
+                    <th><%= num+=1 %></th>
                     <td class="fw-semibold"><%= dokter.username %></td>
                     <td><%= dokter.fullname %></td>
                     <td><%= dokter.role %></td>
                     <td class="text-center">
                       <!-- 1. Tombol Detail -->
                       <a
-                        href="/admin/user/<%= dokter.id || dokter.userId %>"
+                        href="/adminDashboard/user/<%= dokter.userId %>"
                         class="btn btn-sm btn-info text-white me-1 text-decoration-none"
                       >
                         Detail
@@ -260,7 +262,7 @@
 
                       <!-- 2. Tombol Add Pasien (Baru di Tengah) -->
                       <a
-                        href="/admin/dokter/add-pasien/<%= dokter.id || dokter.userId %>"
+                        href="/adminDashboard/dokter/add-pasien/<%= dokter.userId %>"
                         class="btn btn-sm btn-warning text-dark me-1 text-decoration-none fw-semibold"
                         title="Tambah/Hubungkan Pasien ke Dokter Ini"
                       >
@@ -277,7 +279,7 @@
                         <input
                           type="hidden"
                           name="user_id"
-                          value="<%= dokter.id || dokter.userId %>"
+                          value="<%= dokter.userId %>"
                         />
                         <button class="btn btn-sm btn-danger" type="submit">
                           Hapus

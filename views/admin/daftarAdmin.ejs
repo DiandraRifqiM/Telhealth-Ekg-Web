@@ -59,7 +59,7 @@
           </li>
           <li class="nav-item mb-1">
             <a
-              href="/addUser"
+              href="/adminDashboard/addUser"
               class="nav-link text-white rounded-3 py-2 px-3 fw-semibold"
               ><i class="bi bi-person-plus-fill me-3 fs-5"></i> Tambah
               Pengguna</a
@@ -68,8 +68,10 @@
         </ul>
         <hr class="sidebar-divider" />
         <div>
-          <a href="/admin/profile" class="sidebar-profile-link">
-            <div class="profile-avatar bg-white text-success rounded-circle me-2">
+          <a href="/adminDashboard/profile" class="sidebar-profile-link">
+            <div
+              class="profile-avatar bg-white text-success rounded-circle me-2"
+            >
               <i class="bi bi-person-badge-fill fs-5"></i>
             </div>
             <div class="text-truncate">
@@ -137,7 +139,7 @@
             </li>
             <li class="nav-item mb-1">
               <a
-                href="/addUser"
+                href="/adminDashboard/addUser"
                 class="nav-link text-white rounded-3 py-2 px-3 fw-semibold"
                 ><i class="bi bi-person-plus-fill me-3 fs-5"></i> Tambah
                 Pengguna</a
@@ -146,7 +148,7 @@
           </ul>
           <hr class="border-light border-opacity-25" />
           <div>
-            <a href="/admin/profile" class="sidebar-profile-link">
+            <a href="/adminDashboard/profile" class="sidebar-profile-link">
               <div
                 class="profile-avatar bg-white text-success rounded-circle me-2"
               >
@@ -242,16 +244,16 @@
                     Admin tidak ditemukan.
                   </td>
                 </tr>
-                <% } else { %> <% getAdminData.forEach((admin, id) => { %>
+                <% } else { %> <% getAdminData.forEach((admin, num) => { %>
                 <tbody>
                   <tr>
-                    <th><%= id+=1 %></th>
+                    <th><%= num+=1 %></th>
                     <td class="fw-semibold"><%= admin.username %></td>
                     <td><%= admin.fullname %></td>
                     <td><%= admin.role %></td>
                     <td class="text-center">
                       <a
-                        href="/admin/user/<%= admin.id || admin.userId %>"
+                        href="/adminDashboard/user/<%= admin.userId %>"
                         class="btn btn-sm btn-info text-white me-1 text-decoration-none"
                         >Detail</a
                       >
@@ -264,7 +266,7 @@
                         <input
                           type="hidden"
                           name="user_id"
-                          value="<%= admin.id || admin.userId %>"
+                          value="<%= admin.userId %>"
                         />
                         <button class="btn btn-sm btn-danger" type="submit">
                           Hapus
