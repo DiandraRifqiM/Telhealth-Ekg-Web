@@ -9,6 +9,7 @@ const methodOverride = require("method-override");
 const { FirestoreSessionStore } = require("./utils/firestoreSession");
 
 // Services
+
 // user
 const {
   addUser,
@@ -26,6 +27,9 @@ const {
 
 // patient
 const { addPatient } = require("./services/patientList");
+
+//Esp Data
+const { addEspRecord, readEspRecord } = require("./services/espService");
 
 // Db
 const { db } = require("./utils/db");
@@ -153,7 +157,7 @@ app.post("/login", async (req, res) => {
 app.post("/logout", async (req, res) => {
   try {
     req.session.destroy();
-    res.redirect("/login");
+    return res.redirect("/login");
   } catch (error) {
     console.log(error.message);
   }
@@ -213,7 +217,7 @@ app.get(
       });
     } catch (error) {
       console.log("Gagal memuat detail user:", error.message);
-      res.redirect("/adminDashboard");
+      return res.redirect("/adminDashboard");
     }
   }
 );
@@ -290,7 +294,7 @@ app.put("/adminDashboard/user", isAuth, authRole("admin"), async (req, res) => {
     }
     await updateUser(userId, userData);
 
-    res.redirect(`/adminDashboard/user/${userId}`);
+    return res.redirect(`/adminDashboard/user/${userId}`);
   } catch (error) {
     console.log("Update User Error:", error);
     res.status(500).send("Gagal memperbarui data pengguna");
@@ -319,7 +323,7 @@ app.get(
       });
     } catch (error) {
       console.log("Gagal memuat halaman add pasien dokter:", error.message);
-      res.redirect("/adminDashboard/dokter");
+      return res.redirect("/adminDashboard/dokter");
     }
   }
 );
@@ -336,7 +340,7 @@ app.post(
         pasienId,
       };
       await addPatient(data);
-      res.redirect("/adminDashboard/dokter/");
+      return res.redirect("/adminDashboard/dokter/");
     } catch (error) {
       console.log("Gagal menambah pasien", error);
     }
@@ -474,7 +478,7 @@ app.post("/adminDashboard/addUser", async (req, res) => {
       role: role,
     });
 
-    res.redirect("/adminDashboard");
+    return res.redirect("/adminDashboard");
   } catch (error) {
     console.log("Gagal menambah user:", error.message);
     res.status(500).send("Error Fetching " + error.message);
@@ -487,7 +491,7 @@ app.delete("/user", isAuth, authRole("admin"), async (req, res) => {
     const userId = req.body.user_id;
     await delUser(userId);
     const redirUrl = req.query.redirect || "/";
-    res.redirect(redirUrl);
+    return res.redirect(redirUrl);
   } catch (error) {
     console.log("Gagal menghapus user!!");
   }
@@ -504,7 +508,12 @@ app.get("/dokterDashboard", isAuth, authRole("dokter"), async (req, res) => {
 app.get("/pasienDashboard", isAuth, authRole("pasien"), async (req, res) => {
   const userId = req.session.userId;
   const userData = await getUserData(userId);
-  res.render("pasien/userDashboard", { title: "Dashboard Pasien", userData });
+
+  res.render("pasien/userDashboard", {
+    title: "Dashboard Pasien",
+    userData,
+    patienId: userId,
+  });
 });
 
 app.get("/user/profile", isAuth, authRole("pasien"), async (req, res) => {
@@ -515,6 +524,33 @@ app.get("/user/profile", isAuth, authRole("pasien"), async (req, res) => {
     userData,
   });
 });
+
+app.post(
+  "/pasienDashboard/api/esp-data",
+  isAuth,
+  authRole("pasien"),
+  async (req, res) => {
+    try {
+      const userId = req.session.userId;
+      const { deviceId, value } = req.body;
+      console.log(typeof userId);
+
+      const record = await addEspRecord(deviceId, userId, value);
+
+      res.status(201).json({
+        message: "ESP data saved successfully",
+        data: record,
+      });
+
+      console.log("Sensor value saved.");
+    } catch (error) {
+      console.log("Gagal mengirim data esp!!", error);
+      res.status(400).json({
+        message: error.message,
+      });
+    }
+  }
+);
 
 // Port listened
 try {

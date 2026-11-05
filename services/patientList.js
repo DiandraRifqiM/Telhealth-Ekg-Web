@@ -1,5 +1,4 @@
 const { db } = require("../utils/db");
-const { userValidation } = require("../models/Users");
 const { text } = require("express");
 
 const addPatient = async (data) => {
