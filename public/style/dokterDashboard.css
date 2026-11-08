@@ -1,0 +1,172 @@
+/* ==========================================
+   PENGATURAN DASAR & KUNCI LAYOUT UTAMA
+   ========================================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8f9fa;
+  color: #212529;
+}
+
+.main-container {
+  display: flex !important;
+  height: 100vh !important;
+  width: 100% !important;
+  overflow: hidden !important;
+}
+
+/* ==========================================
+   SIDEBAR
+   ========================================== */
+.sidebar {
+  width: 260px !important;
+  min-width: 260px !important;
+  height: 100vh !important;
+  background-color: #0d6efd !important;
+  color: #ffffff !important;
+  flex-shrink: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow-y: auto !important;
+  z-index: 1000;
+  position: relative;
+}
+
+.sidebar-divider {
+  border: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.25);
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+  opacity: 1;
+}
+
+.sidebar .nav-link {
+  color: rgba(255, 255, 255, 0.85) !important;
+  transition: all 0.2s ease-in-out;
+}
+
+.sidebar .nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.15) !important;
+  color: #ffffff !important;
+}
+
+.sidebar .nav-link.active {
+  background-color: #ffffff !important;
+  color: #0d6efd !important;
+  font-weight: bold;
+}
+
+/* ==========================================
+   TOMBOL PROFIL DI BAWAH SIDEBAR
+   ========================================== */
+.sidebar-profile-btn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  width: 100%;
+  text-align: left;
+  border-radius: 12px;
+  padding: 8px 10px;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  transition: background 0.2s ease;
+  margin-top: auto !important;
+  pointer-events: auto !important;
+  cursor: pointer !important;
+  position: relative;
+  z-index: 10;
+}
+
+.sidebar-profile-btn:hover,
+.sidebar-profile-btn.active {
+  background-color: rgba(255, 255, 255, 0.2) !important;
+  color: white !important;
+}
+
+.profile-avatar {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  min-height: 40px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.profile-avatar-large {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.profile-email {
+  font-size: 11px;
+}
+
+/* ==========================================
+   AREA KONTEN UTAMA & SCROLL MANDIRI
+   ========================================== */
+.main-content {
+  flex: 1 !important;
+  min-width: 0 !important;
+  height: 100vh !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+}
+
+.topbar {
+  flex-shrink: 0;
+}
+
+.form-container {
+  flex: 1;
+  min-height: min-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 1.5rem !important;
+  padding-bottom: 3rem !important;
+}
+
+/* ==========================================
+   RESPONSIVE (MOBILE)
+   ========================================== */
+@media (max-width: 768px) {
+  html,
+  body {
+    overflow: auto;
+  }
+  .main-container {
+    flex-direction: column !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+  .sidebar {
+    width: 100% !important;
+    min-width: 0 !important;
+    height: auto !important;
+  }
+  .main-content {
+    height: auto !important;
+    overflow: visible !important;
+  }
+}

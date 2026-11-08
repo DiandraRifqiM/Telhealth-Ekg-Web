@@ -59,7 +59,7 @@ app.use(
     secret: "secret",
     resave: false,
     saveUninitialized: false,
-  })
+  }),
 );
 app.use(flash());
 
@@ -194,7 +194,7 @@ app.get(
       userData,
       activeTab: "profile",
     });
-  }
+  },
 );
 
 // Halaman Detail Pengguna (Admin)
@@ -219,7 +219,7 @@ app.get(
       console.log("Gagal memuat detail user:", error.message);
       return res.redirect("/adminDashboard");
     }
-  }
+  },
 );
 
 // Update User Data
@@ -325,7 +325,7 @@ app.get(
       console.log("Gagal memuat halaman add pasien dokter:", error.message);
       return res.redirect("/adminDashboard/dokter");
     }
-  }
+  },
 );
 // Proses tambah pasien ke dokter
 app.post(
@@ -344,7 +344,7 @@ app.post(
     } catch (error) {
       console.log("Gagal menambah pasien", error);
     }
-  }
+  },
 );
 
 // ==========================================
@@ -367,7 +367,7 @@ app.get(
       getPasienData,
       activeTab: "pasien",
     });
-  }
+  },
 );
 
 // Daftar Dokter
@@ -388,7 +388,7 @@ app.get(
       getDokterData,
       activeTab: "dokter",
     });
-  }
+  },
 );
 
 // Daftar Admin
@@ -409,7 +409,7 @@ app.get(
       getAdminData,
       activeTab: "admin",
     });
-  }
+  },
 );
 
 // Add User
@@ -425,7 +425,7 @@ app.get(
       userData,
       activeTab: "addUser",
     });
-  }
+  },
 );
 
 // proccess addUser
@@ -549,7 +549,7 @@ app.post(
         message: error.message,
       });
     }
-  }
+  },
 );
 
 // Port listened

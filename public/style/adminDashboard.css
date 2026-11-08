@@ -1,5 +1,5 @@
 /* ==========================================
-   1. PENGATURAN DASAR & RESET BROWSER
+   PENGATURAN DASAR & KUNCI LAYOUT UTAMA
    ========================================== */
 *,
 *::before,
@@ -12,15 +12,13 @@ body {
   height: 100%;
   margin: 0;
   padding: 0;
-  overflow: hidden; /* Mengunci scroll window utama agar sidebar tetap di tempat */
+  overflow: hidden;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   background-color: #f8f9fa;
   color: #212529;
 }
 
-/* Container Utama Layout Dashboard */
-.main-container,
-.app-layout {
+.main-container {
   display: flex;
   height: 100vh;
   width: 100%;
@@ -28,7 +26,7 @@ body {
 }
 
 /* ==========================================
-   2. SIDEBAR DESKTOP (TEMA HIJAU)
+   SIDEBAR ADMIN
    ========================================== */
 .sidebar {
   width: 260px;
@@ -37,23 +35,20 @@ body {
   position: sticky;
   top: 0;
   left: 0;
-  background-color: #198754 !important; /* Hijau Utama Admin */
-  color: #ffffff !important;
   flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
   overflow-y: auto;
   z-index: 1000;
 }
 
-/* Garis Pemisah Sidebar */
 .sidebar-divider {
   border: 0;
   border-top: 1px solid rgba(255, 255, 255, 0.25);
-  margin-top: 0;
-  margin-bottom: 0.75rem;
+  margin: 0 0 0.75rem 0;
   opacity: 1;
 }
 
-/* Navigasi Link Sidebar */
 .sidebar .nav-link,
 .sidebar-mobile .nav-link {
   color: rgba(255, 255, 255, 0.85) !important;
@@ -66,7 +61,7 @@ body {
   color: #ffffff !important;
 }
 
-/* Menu Aktif (Latar Putih, Teks Hijau) */
+/* Perbaikan utama: Menu aktif jadi kotak putih dengan teks hijau */
 .sidebar .nav-link.active,
 .sidebar-mobile .nav-link.active {
   background-color: #ffffff !important;
@@ -74,13 +69,35 @@ body {
   font-weight: bold;
 }
 
-/* Avatar Profil Sidebar */
+/* ==========================================
+   TOMBOL PROFIL DI BAWAH SIDEBAR
+   ========================================== */
+.sidebar-profile-link,
+.sidebar-profile-btn {
+  display: flex;
+  align-items: center;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  text-decoration: none;
+  transition: all 0.2s ease;
+  margin-top: auto;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.sidebar-profile-link:hover,
+.sidebar-profile-btn:hover {
+  background-color: rgba(255, 255, 255, 0.2) !important;
+  color: white !important;
+}
+
 .profile-avatar {
-  width: 42px;
-  height: 42px;
-  min-width: 42px;
-  min-height: 42px;
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  min-height: 40px;
   flex-shrink: 0;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -88,34 +105,10 @@ body {
 
 .profile-email {
   font-size: 11px;
-  overflow-wrap: anywhere;
-}
-
-.sidebar-profile-link {
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  padding: 6px 8px;
-  border-radius: 10px;
-  transition: background-color 0.2s ease;
-}
-
-.sidebar-profile-link:hover {
-  background-color: rgba(255, 255, 255, 0.15);
-}
-
-/* Avatar Besar Halaman Profil */
-.profile-avatar-large {
-  width: 90px;
-  height: 90px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 /* ==========================================
-   3. AREA KONTEN UTAMA & SCROLLBAR
+   KONTEN UTAMA & SCROLL MANDIRI
    ========================================== */
 .main-content {
   flex: 1;
@@ -123,7 +116,7 @@ body {
   height: 100vh;
   display: flex;
   flex-direction: column;
-  overflow-y: auto; /* Memungkinkan area konten di-scroll secara mandiri */
+  overflow-y: auto;
   overflow-x: hidden;
 }
 
@@ -131,64 +124,17 @@ body {
   flex-shrink: 0;
 }
 
-.page-header {
-  gap: 20px;
+.profile-avatar-large {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
 }
 
-.page-header h4 {
-  font-size: 1.4rem;
-}
-
-.page-header p {
-  font-size: 0.9rem;
-}
-
-.page-header .btn {
-  white-space: nowrap;
-}
-
-/* Custom Scrollbar Area Utama */
-.main-content::-webkit-scrollbar {
-  width: 8px;
-}
-
-.main-content::-webkit-scrollbar-thumb {
-  background-color: #b5b5b5;
-  border-radius: 10px;
-}
-
-.main-content::-webkit-scrollbar-track {
-  background-color: #f1f1f1;
-}
-
-/* ==========================================
-   4. TABEL & ELEMEN DASHBOARD
-   ========================================== */
-.table th,
-.table td {
-  vertical-align: middle;
-}
-
-.btn-info {
-  background-color: #0dcaf0;
-  border-color: #0dcaf0;
-}
-
-.table td .btn {
-  margin-bottom: 4px;
-}
-
-@media (min-width: 768px) {
-  .table td .btn {
-    margin-bottom: 0;
-  }
-}
-
-/* ==========================================
-   5. STYLING FORM (ADD USER)
-   ========================================== */
-.form-container,
-.form-container-scroll {
+.form-container {
   flex: 1;
   min-height: min-content;
   display: flex;
@@ -198,186 +144,7 @@ body {
   padding-bottom: 3rem !important;
 }
 
-.form-content {
-  width: 100%;
-  padding: 12px 0;
-}
-
-.user-form {
-  width: 100%;
-  max-width: 1100px;
-}
-
-/* Layout Grid Dua Kolom (Label Kiri & Input Kanan) */
-.form-row-custom {
-  display: grid;
-  grid-template-columns: 240px minmax(0, 1fr);
-  align-items: center;
-  column-gap: 24px;
-  margin-bottom: 24px;
-}
-
-.form-row-custom label {
-  margin: 0;
-  font-size: 0.95rem;
-  font-weight: 600;
-  white-space: nowrap;
-}
-
-.form-row-custom .form-control,
-.form-row-custom .form-select {
-  width: 100%;
-  min-width: 0;
-  min-height: 48px;
-  padding: 0.7rem 1rem;
-  font-family: inherit;
-  font-size: 1rem;
-  border: 1px solid #ced4da;
-  border-radius: 8px;
-  background-color: #fff;
-  transition:
-    border-color 0.2s ease,
-    box-shadow 0.2s ease;
-}
-
-.form-row-custom .form-control:focus,
-.form-row-custom .form-select:focus {
-  border-color: #198754;
-  outline: 0;
-  box-shadow: 0 0 0 0.2rem rgba(25, 135, 84, 0.25);
-}
-
-.form-row-custom .form-control::placeholder {
-  color: #adb5bd;
-  opacity: 1;
-}
-
-/* Tombol Aksi Form */
-.form-actions {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 12px;
-  margin-top: 36px;
-}
-
-.form-actions .btn {
-  min-height: 44px;
-  min-width: 150px;
-  padding: 0.7rem 1.25rem;
-  border-radius: 8px;
-  transition:
-    background-color 0.2s ease,
-    border-color 0.2s ease;
-}
-
-/* ==========================================
-   6. RESPONSIVE BREAKPOINTS
-   ========================================== */
-
-/* Tablet & Screen Sedang */
-@media (max-width: 992px) {
-  .sidebar {
-    width: 220px;
-    min-width: 220px;
-  }
-
-  .form-row-custom {
-    grid-template-columns: 200px minmax(0, 1fr);
-    column-gap: 18px;
-  }
-}
-
-/* Mobile Devices */
-@media (max-width: 768px) {
-  html,
-  body {
-    overflow: auto;
-  }
-
-  .main-container,
-  .app-layout {
-    flex-direction: column;
-    height: auto;
-    overflow: visible;
-  }
-
-  .sidebar {
-    width: 100%;
-    min-width: 0;
-    height: auto;
-    position: relative;
-    border-right: 0 !important;
-    border-bottom: 1px solid #dee2e6;
-  }
-
-  .sidebar .nav {
-    flex-direction: row !important;
-    gap: 8px;
-  }
-
-  .sidebar .nav-item {
-    flex: 1;
-  }
-
-  .sidebar .nav-link {
-    text-align: center;
-    padding: 0.6rem !important;
-    font-size: 0.85rem;
-  }
-
-  .main-content {
-    height: auto;
-    overflow: visible;
-    padding: 1.25rem !important;
-  }
-
-  .form-row-custom {
-    grid-template-columns: minmax(0, 1fr);
-    row-gap: 8px;
-    margin-bottom: 20px;
-  }
-
-  .form-row-custom label {
-    white-space: normal;
-  }
-
-  .form-row-custom .form-control,
-  .form-row-custom .form-select {
-    min-height: 46px;
-  }
-
-  .form-actions {
-    margin-top: 28px;
-  }
-
-  .form-actions .btn {
-    flex: 1;
-    min-width: 0;
-    padding: 0.7rem 0.5rem;
-  }
-}
-
-/* HP Kecil */
-@media (max-width: 400px) {
-  .main-content {
-    padding: 1rem !important;
-  }
-
-  .page-header {
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .sidebar .nav-link {
-    font-size: 0.78rem;
-  }
-
-  .form-actions {
-    gap: 8px;
-  }
-
-  .form-actions .btn {
-    font-size: 0.85rem;
-  }
+.main-content-scroll {
+  overflow-y: auto;
+  height: 100vh;
 }

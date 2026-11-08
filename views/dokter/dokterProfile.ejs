@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/style/dokterDashboard.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+    />
+  </head>
+  <body class="bg-light">
+    <div class="main-container">
+      <!-- SIDEBAR DESKTOP -->
+      <div
+        class="sidebar d-none d-md-flex flex-column p-3 bg-primary text-white"
+      >
+        <a
+          href="/dokterDashboard"
+          class="d-flex align-items-center mb-3 text-decoration-none text-white px-2"
+        >
+          <i class="bi bi-heart-pulse-fill fs-3 me-2"></i>
+          <span class="fs-5 fw-bold">EKG Monitor</span>
+        </a>
+        <hr class="sidebar-divider" />
+        <ul class="nav nav-pills flex-column mb-auto">
+          <li class="nav-item mb-1">
+            <a
+              href="/dokterDashboard"
+              class="nav-link text-white rounded-3 py-2 px-3 fw-semibold"
+            >
+              <i class="bi bi-bar-chart-line-fill me-3 fs-5"></i> Dashboard
+            </a>
+          </li>
+          <li class="nav-item mb-1">
+            <a
+              href="/dokterDashboard/pasien"
+              class="nav-link text-white rounded-3 py-2 px-3 fw-semibold"
+            >
+              <i class="bi bi-people-fill me-3 fs-5"></i> Daftar Pasien
+            </a>
+          </li>
+          <li class="nav-item mb-1">
+            <a
+              href="/dokterDashboard/detail"
+              class="nav-link text-white rounded-3 py-2 px-3 fw-semibold"
+            >
+              <i class="bi bi-activity me-3 fs-5"></i> Pantau Detail EKG
+            </a>
+          </li>
+          <li class="nav-item mb-1">
+            <a
+              href="/dokterDashboard/riwayat"
+              class="nav-link text-white rounded-3 py-2 px-3 fw-semibold"
+            >
+              <i class="bi bi-clock-history me-3 fs-5"></i> Riwayat Rekaman
+            </a>
+          </li>
+        </ul>
+        <hr class="sidebar-divider" />
+        <div class="pb-2">
+          <a
+            href="/dokterDashboard/profile"
+            class="sidebar-profile-btn text-decoration-none text-white active"
+          >
+            <div
+              class="profile-avatar bg-white text-primary rounded-circle me-2 d-inline-flex align-items-center justify-content-center"
+              style="width: 40px; height: 40px"
+            >
+              <i class="bi bi-person-fill fs-5"></i>
+            </div>
+            <div
+              class="text-truncate d-inline-block align-middle"
+              style="max-width: 170px"
+            >
+              <div class="fw-bold small text-white text-truncate">
+                <%= locals.userData ? userData.fullname : 'dr. Eko Wiranto,
+                Sp.JP' %>
+              </div>
+              <div class="profile-email text-white-50 small text-truncate">
+                Profil Saya
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- KONTEN UTAMA -->
+      <div class="main-content bg-light">
+        <!-- TOPBAR -->
+        <div
+          class="topbar bg-white border-bottom px-3 px-md-4 py-3 d-flex justify-content-between align-items-center shadow-sm"
+        >
+          <div class="d-flex align-items-center">
+            <h4 class="fw-bold text-dark m-0 fs-5 fs-md-4">Profil Dokter</h4>
+          </div>
+          <div>
+            <form action="/logout" method="post" class="m-0">
+              <button
+                type="submit"
+                class="btn btn-outline-danger btn-sm fw-semibold d-flex align-items-center"
+              >
+                <i class="bi bi-box-arrow-right me-2"></i> Logout
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <!-- ISI PROFIL -->
+        <div class="form-container p-3 p-md-4">
+          <div class="mb-3 w-100" style="max-width: 900px">
+            <a
+              href="/dokterDashboard"
+              class="btn btn-outline-secondary btn-sm px-3 py-2 fw-semibold d-inline-flex align-items-center rounded-3 text-decoration-none"
+            >
+              <i class="bi bi-arrow-left me-2"></i> Kembali
+            </a>
+          </div>
+
+          <div
+            class="row g-4 w-100 justify-content-center"
+            style="max-width: 900px"
+          >
+            <!-- CARD UTAMA KIRI -->
+            <div class="col-12 col-lg-4">
+              <div
+                class="card border-0 shadow-sm rounded-4 p-4 text-center h-100"
+              >
+                <div class="d-flex justify-content-center mb-3">
+                  <div
+                    class="profile-avatar-large bg-primary bg-opacity-10 text-primary"
+                  >
+                    <i class="bi bi-person-fill fs-1"></i>
+                  </div>
+                </div>
+                <h5 class="fw-bold text-dark mb-3">
+                  <%= locals.userData ? userData.fullname : 'dr. Eko Wiranto,
+                  Sp.JP' %>
+                </h5>
+                <hr class="text-muted opacity-25" />
+                <div class="text-start">
+                  <span class="text-muted small d-block">Status Akun</span>
+                  <span
+                    class="badge bg-primary bg-opacity-10 text-primary fw-semibold mt-1 px-3 py-2"
+                    >Dokter Spesialis</span
+                  >
+                </div>
+              </div>
+            </div>
+
+            <!-- CARD DETAIL INFORMASI DOKTER -->
+            <div class="col-12 col-lg-8">
+              <div class="card border-0 shadow-sm rounded-4 p-4 h-100">
+                <h5 class="fw-bold text-dark mb-4 border-bottom pb-2">
+                  <i class="bi bi-card-heading text-primary me-2"></i> Detail
+                  Informasi Dokter
+                </h5>
+
+                <div class="row g-3">
+                  <div class="col-12 col-md-6">
+                    <div class="p-3 bg-light rounded-3 border border-1">
+                      <span class="text-muted small d-block mb-1"
+                        >Nama Lengkap</span
+                      >
+                      <strong class="text-dark"
+                        ><%= locals.userData ? userData.fullname : 'dr. Eko
+                        Wiranto, Sp.JP' %></strong
+                      >
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-md-6">
+                    <div class="p-3 bg-light rounded-3 border border-1">
+                      <span class="text-muted small d-block mb-1"
+                        >Username / ID Dokter</span
+                      >
+                      <strong class="text-dark"
+                        ><%= locals.userData ? userData.username :
+                        'dokter_eko01' %></strong
+                      >
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-md-6">
+                    <div class="p-3 bg-light rounded-3 border border-1">
+                      <span class="text-muted small d-block mb-1"
+                        >Spesialisasi</span
+                      >
+                      <strong class="text-dark">Kardiologi (Jantung)</strong>
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-md-6">
+                    <div class="p-3 bg-light rounded-3 border border-1">
+                      <span class="text-muted small d-block mb-1"
+                        >Nomor SIP (Surat Izin Praktik)</span
+                      >
+                      <strong class="text-dark">446/SIP-321/RSJ/2026</strong>
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-md-6">
+                    <div class="p-3 bg-light rounded-3 border border-1">
+                      <span class="text-muted small d-block mb-1"
+                        >Nomor Telepon / WA</span
+                      >
+                      <strong class="text-dark"
+                        ><%= locals.userData ? userData.phone : '081234567890'
+                        %></strong
+                      >
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-md-6">
+                    <div class="p-3 bg-light rounded-3 border border-1">
+                      <span class="text-muted small d-block mb-1"
+                        >Rumah Sakit / Faskes</span
+                      >
+                      <strong class="text-dark">RS Jantung Harapan Kita</strong>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
