@@ -504,6 +504,29 @@ app.get("/dokterDashboard", isAuth, authRole("dokter"), async (req, res) => {
   res.render("dokter/dokterDashboard", { title: "Dashboard Dokter", userData });
 });
 
+// Tambahan Rute Link Dokter (Tanpa Mengubah Kode Lain)
+app.get(
+  "/dokterDashboard/pasien",
+  isAuth,
+  authRole("dokter"),
+  async (req, res) => {
+    const userId = req.session.userId;
+    const userData = await getUserData(userId);
+    res.render("dokter/dokterPasien", { title: "Daftar Pasien", userData });
+  },
+);
+
+app.get(
+  "/dokterDashboard/profile",
+  isAuth,
+  authRole("dokter"),
+  async (req, res) => {
+    const userId = req.session.userId;
+    const userData = await getUserData(userId);
+    res.render("dokter/dokterProfile", { title: "Profil Dokter", userData });
+  },
+);
+
 // PASIEN ENVIRONMENT
 app.get("/pasienDashboard", isAuth, authRole("pasien"), async (req, res) => {
   const userId = req.session.userId;
