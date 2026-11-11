@@ -60,12 +60,14 @@
               <i class="bi bi-person-fill fs-5"></i>
             </div>
             <div class="text-truncate" style="max-width: 170px">
-              <div class="fw-bold small text-white text-truncate">Dokter</div>
+              <div class="fw-bold small text-white text-truncate">
+                <%= userData.fullname %>
+              </div>
               <div
                 class="profile-email text-white-50 small text-truncate"
                 style="font-size: 11px"
               >
-                admin
+                <%= userData.username %>
               </div>
             </div>
           </a>
@@ -113,13 +115,13 @@
                     <i class="bi bi-person-fill fs-1"></i>
                   </div>
                 </div>
-                <h5 class="fw-bold text-dark mb-3">Alfito Harika Wijaya</h5>
+                <h5 class="fw-bold text-dark mb-3"><%= userData.fullname %></h5>
                 <hr class="text-muted opacity-25" />
                 <div class="text-start">
                   <span class="text-muted small d-block">Status Akun</span>
                   <span
                     class="badge bg-primary bg-opacity-10 text-primary fw-semibold mt-1 px-3 py-2"
-                    >Dokter</span
+                    ><%= userData.role%></span
                   >
                 </div>
               </div>
@@ -138,47 +140,49 @@
                       <span class="text-muted small d-block mb-1"
                         >Nama Lengkap</span
                       >
-                      <strong class="text-dark">Alfito Harika Wijaya</strong>
+                      <strong class="text-dark"
+                        ><%= userData.fullname %></strong
+                      >
                     </div>
                   </div>
                   <div class="col-12 col-md-6">
                     <div class="p-3 bg-light rounded-3 border border-1">
                       <span class="text-muted small d-block mb-1"
-                        >Username / ID</span
+                        >Username</span
                       >
-                      <strong class="text-dark">carmell</strong>
+                      <strong class="text-dark"><%= userData.username%></strong>
                     </div>
                   </div>
                   <div class="col-12 col-md-6">
                     <div class="p-3 bg-light rounded-3 border border-1">
                       <span class="text-muted small d-block mb-1"
-                        >Spesialisasi</span
+                        >Tanggal Lahir</span
                       >
-                      <strong class="text-dark">Kardiologi (Jantung)</strong>
+                      <strong class="text-dark"><%= userData.dob %></strong>
                     </div>
                   </div>
                   <div class="col-12 col-md-6">
                     <div class="p-3 bg-light rounded-3 border border-1">
                       <span class="text-muted small d-block mb-1"
-                        >Nomor SIP</span
+                        >Jenis Kelamin</span
                       >
-                      <strong class="text-dark">446/SIP-321/RSJ/2026</strong>
+                      <strong class="text-dark"><%= userData.gender %></strong>
                     </div>
                   </div>
                   <div class="col-12 col-md-6">
                     <div class="p-3 bg-light rounded-3 border border-1">
                       <span class="text-muted small d-block mb-1"
-                        >Nomor Telepon / WA</span
+                        >Golongan Darah</span
                       >
-                      <strong class="text-dark">081234567890</strong>
+                      <strong class="text-dark"
+                        ><%= userData.bloodType%></strong
+                      >
                     </div>
                   </div>
                   <div class="col-12 col-md-6">
                     <div class="p-3 bg-light rounded-3 border border-1">
-                      <span class="text-muted small d-block mb-1"
-                        >Rumah Sakit / Faskes</span
-                      >
-                      <strong class="text-dark">RS Jantung Harapan Kita</strong>
+                      <span class="text-muted small d-block mb-1">No Telp</span>
+                      <strong class="text-dark"><%= userData.phone %></strong>
                     </div>
                   </div>
                 </div>

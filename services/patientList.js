@@ -11,8 +11,27 @@ const addPatient = async (data) => {
 
     console.log("Pasien berhasil ditambah ✅");
   } catch (error) {
-    console.log("Fetch error", error);
+    console.log("Fetch error!", error);
   }
 };
 
-module.exports = { addPatient };
+const getPatienId = async (dokterId) => {
+  try {
+    const snapshot = await db
+      .collection("patientList")
+      .where("dokterId", "==", dokterId)
+      .get();
+
+    if (snapshot.empty) {
+      console.log("Id tidak ada");
+    }
+
+    const userList = snapshot.docs.map((doc) => doc.data().patientId);
+
+    return userList;
+  } catch (error) {
+    console.log("Fetch error!", error);
+  }
+};
+
+module.exports = { addPatient, getPatienId };
