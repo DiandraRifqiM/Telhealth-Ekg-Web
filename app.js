@@ -327,6 +327,23 @@ app.get(
     }
   },
 );
+
+// Halaman List Pasien Dokter (Pure Front-End Route)
+app.get(
+  "/adminDashboard/dokter/list-pasien/:id",
+  isAuth,
+  authRole("admin"),
+  async (req, res) => {
+    const userId = req.session.userId;
+    const userData = await getUserData(userId);
+    res.render("admin/listPasienDokter", {
+      title: "Daftar Pasien Dokter",
+      userData,
+      activeTab: "dokter",
+    });
+  },
+);
+
 // Proses tambah pasien ke dokter
 app.post(
   "/adminDashboard/dokter/add-pasien",
@@ -504,7 +521,6 @@ app.get("/dokterDashboard", isAuth, authRole("dokter"), async (req, res) => {
   res.render("dokter/dokterDashboard", { title: "Dashboard Dokter", userData });
 });
 
-// Tambahan Rute Link Dokter (Tanpa Mengubah Kode Lain)
 app.get(
   "/dokterDashboard/pasien",
   isAuth,
@@ -513,6 +529,31 @@ app.get(
     const userId = req.session.userId;
     const userData = await getUserData(userId);
     res.render("dokter/dokterPasien", { title: "Daftar Pasien", userData });
+  },
+);
+
+app.get(
+  "/dokterDashboard/pasien/detail",
+  isAuth,
+  authRole("dokter"),
+  async (req, res) => {
+    const userId = req.session.userId;
+    const userData = await getUserData(userId);
+    res.render("dokter/detailPasien", {
+      title: "Detail Informasi Pasien",
+      userData,
+    });
+  },
+);
+
+app.get(
+  "/dokterDashboard/pasien/pantau",
+  isAuth,
+  authRole("dokter"),
+  async (req, res) => {
+    const userId = req.session.userId;
+    const userData = await getUserData(userId);
+    res.render("dokter/pantauPasien", { title: "Pantau EKG Pasien", userData });
   },
 );
 

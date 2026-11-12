@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/style/listPasienDokter.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+    />
+  </head>
+  <body class="bg-light">
+    <div class="d-flex min-vh-100 overflow-hidden">
+      <!-- SIDEBAR DESKTOP -->
+      <div
+        class="sidebar d-none d-md-flex flex-column p-3 bg-success text-white"
+      >
+        <a
+          href="/adminDashboard"
+          class="d-flex align-items-center mb-3 text-decoration-none text-white px-2"
+        >
+          <i class="bi bi-shield-lock-fill fs-3 me-2"></i>
+          <span class="fs-5 fw-bold">Admin Dashboard</span>
+        </a>
+        <hr class="sidebar-divider" />
+        <ul class="nav nav-pills flex-column mb-auto">
+          <li class="nav-item mb-1">
+            <a
+              href="/adminDashboard"
+              class="nav-link text-white rounded-3 py-2 px-3 fw-semibold"
+            >
+              <i class="bi bi-bar-chart-line-fill me-3 fs-5"></i> Dashboard
+            </a>
+          </li>
+          <li class="nav-item mb-1">
+            <a
+              href="/adminDashboard/pasien"
+              class="nav-link text-white rounded-3 py-2 px-3 fw-semibold"
+            >
+              <i class="bi bi-people-fill me-3 fs-5"></i> Daftar Pasien
+            </a>
+          </li>
+          <li class="nav-item mb-1">
+            <a
+              href="/adminDashboard/dokter"
+              class="nav-link active rounded-3 py-2 px-3 fw-semibold"
+            >
+              <i class="bi bi-heart-pulse-fill me-3 fs-5"></i> Daftar Dokter
+            </a>
+          </li>
+          <li class="nav-item mb-1">
+            <a
+              href="/adminDashboard/admin"
+              class="nav-link text-white rounded-3 py-2 px-3 fw-semibold"
+            >
+              <i class="bi bi-person-badge-fill me-3 fs-5"></i> Daftar Admin
+            </a>
+          </li>
+          <li class="nav-item mb-1">
+            <a
+              href="/adminDashboard/addUser"
+              class="nav-link text-white rounded-3 py-2 px-3 fw-semibold"
+            >
+              <i class="bi bi-person-plus-fill me-3 fs-5"></i> Tambah Pengguna
+            </a>
+          </li>
+        </ul>
+        <hr class="sidebar-divider" />
+        <div>
+          <a href="/adminDashboard/profile" class="sidebar-profile-link">
+            <div
+              class="profile-avatar bg-white text-success rounded-circle me-2"
+            >
+              <i class="bi bi-person-badge-fill fs-5"></i>
+            </div>
+            <div class="text-truncate">
+              <div class="fw-bold small text-white text-truncate">
+                <%= locals.userData ? userData.fullname : 'Admin' %>
+              </div>
+              <div class="profile-email text-white-50 small text-truncate">
+                <%= locals.userData ? userData.username : 'admin' %>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- SIDEBAR MOBILE -->
+      <div
+        class="offcanvas offcanvas-start bg-success text-white sidebar-mobile"
+        tabindex="-1"
+        id="mobileSidebar"
+      >
+        <div
+          class="offcanvas-header border-bottom border-light border-opacity-25 px-4 pt-4"
+        >
+          <h5 class="offcanvas-title fw-bold">
+            <i class="bi bi-shield-lock-fill me-2"></i> Admin Dashboard
+          </h5>
+          <button
+            type="button"
+            class="btn-close btn-close-white"
+            data-bs-dismiss="offcanvas"
+          ></button>
+        </div>
+        <div class="offcanvas-body d-flex flex-column p-3">
+          <ul class="nav nav-pills flex-column mb-auto">
+            <li class="nav-item mb-1">
+              <a
+                href="/adminDashboard"
+                class="nav-link text-white rounded-3 py-2 px-3 fw-semibold"
+              >
+                <i class="bi bi-bar-chart-line-fill me-3 fs-5"></i> Dashboard
+              </a>
+            </li>
+            <li class="nav-item mb-1">
+              <a
+                href="/adminDashboard/pasien"
+                class="nav-link text-white rounded-3 py-2 px-3 fw-semibold"
+              >
+                <i class="bi bi-people-fill me-3 fs-5"></i> Daftar Pasien
+              </a>
+            </li>
+            <li class="nav-item mb-1">
+              <a
+                href="/adminDashboard/dokter"
+                class="nav-link active rounded-3 py-2 px-3 fw-semibold"
+              >
+                <i class="bi bi-heart-pulse-fill me-3 fs-5"></i> Daftar Dokter
+              </a>
+            </li>
+            <li class="nav-item mb-1">
+              <a
+                href="/adminDashboard/admin"
+                class="nav-link text-white rounded-3 py-2 px-3 fw-semibold"
+              >
+                <i class="bi bi-person-badge-fill me-3 fs-5"></i> Daftar Admin
+              </a>
+            </li>
+            <li class="nav-item mb-1">
+              <a
+                href="/adminDashboard/addUser"
+                class="nav-link text-white rounded-3 py-2 px-3 fw-semibold"
+              >
+                <i class="bi bi-person-plus-fill me-3 fs-5"></i> Tambah Pengguna
+              </a>
+            </li>
+          </ul>
+          <hr class="border-light border-opacity-25" />
+          <div>
+            <a href="/adminDashboard/profile" class="sidebar-profile-link">
+              <div
+                class="profile-avatar bg-white text-success rounded-circle me-2"
+              >
+                <i class="bi bi-person-badge-fill fs-5"></i>
+              </div>
+              <div class="text-truncate">
+                <div class="fw-bold small text-white text-truncate">
+                  <%= locals.userData ? userData.fullname : 'Admin' %>
+                </div>
+                <div class="profile-email text-white-50 small text-truncate">
+                  <%= locals.userData ? userData.username : 'admin' %>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- KONTEN UTAMA -->
+      <div class="flex-grow-1 bg-light d-flex flex-column h-100 overflow-auto">
+        <div
+          class="bg-white border-bottom px-3 px-md-4 py-3 d-flex justify-content-between align-items-center shadow-sm"
+        >
+          <div class="d-flex align-items-center">
+            <button
+              class="btn btn-outline-success d-md-none me-3"
+              type="button"
+              data-bs-toggle="offcanvas"
+              data-bs-target="#mobileSidebar"
+            >
+              <i class="bi bi-list fs-5"></i>
+            </button>
+            <h4 class="fw-bold text-dark m-0 fs-5 fs-md-4">
+              Daftar Pasien Binaan Dokter
+            </h4>
+          </div>
+          <div>
+            <form action="/logout" method="POST" class="m-0">
+              <button
+                type="submit"
+                class="btn btn-outline-danger btn-sm fw-semibold d-flex align-items-center"
+              >
+                <i class="bi bi-box-arrow-right me-2"></i> Logout
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <div class="p-3 p-md-4 flex-grow-1">
+          <div class="mb-3">
+            <a
+              href="/adminDashboard/dokter"
+              class="btn btn-outline-secondary btn-sm px-3 py-2 fw-semibold d-inline-flex align-items-center rounded-3 text-decoration-none"
+            >
+              <i class="bi bi-arrow-left me-2"></i> Kembali ke Daftar Dokter
+            </a>
+          </div>
+
+          <div class="card border-0 shadow-sm rounded-4 p-4 mb-4 bg-white">
+            <h5 class="fw-bold text-dark mb-1">Informasi Dokter</h5>
+            <p class="text-muted small mb-0">
+              Berikut adalah daftar pasien yang berada di bawah pengawasan
+              dokter ini.
+            </p>
+          </div>
+
+          <div class="card border-0 shadow-sm rounded-4 p-4">
+            <div class="table-responsive">
+              <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                  <tr>
+                    <th class="py-3">No.</th>
+                    <th class="py-3">Username Pasien</th>
+                    <th class="py-3">Nama Lengkap</th>
+                    <th class="py-3">Golongan Darah</th>
+                    <th class="py-3 text-center">Aksi</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1</td>
+                    <td class="fw-semibold">Kemal123</td>
+                    <td>Kemal Palevi</td>
+                    <td>AB</td>
+                    <td class="text-center">
+                      <button class="btn btn-sm btn-danger px-3 fw-semibold">
+                        Hapus dari Dokter
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

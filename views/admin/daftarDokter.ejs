@@ -260,16 +260,25 @@
                         Detail
                       </a>
 
-                      <!-- 2. Tombol Add Pasien (Baru di Tengah) -->
+                      <!-- 2. Tombol List Pasien (Baru - Bahasa Indonesia) -->
+                      <a
+                        href="/adminDashboard/dokter/list-pasien/<%= dokter.userId %>"
+                        class="btn btn-sm btn-success text-white me-1 text-decoration-none fw-semibold"
+                        title="Lihat Daftar Pasien Dokter Ini"
+                      >
+                        <i class="bi bi-people-fill me-1"></i> List Pasien
+                      </a>
+
+                      <!-- 3. Tombol Tambah Pasien -->
                       <a
                         href="/adminDashboard/dokter/add-pasien/<%= dokter.userId %>"
                         class="btn btn-sm btn-warning text-dark me-1 text-decoration-none fw-semibold"
                         title="Tambah/Hubungkan Pasien ke Dokter Ini"
                       >
-                        <i class="bi bi-person-plus-fill me-1"></i> Add Pasien
+                        <i class="bi bi-person-plus-fill me-1"></i> Tambah Pasien
                       </a>
 
-                      <!-- 3. Tombol Hapus / Delete -->
+                      <!-- 4. Tombol Hapus / Delete -->
                       <form
                         action="/user?_method=DELETE&redirect=/adminDashboard/dokter"
                         method="post"
