@@ -58,12 +58,24 @@
             >
               <i class="bi bi-person-fill"></i>
             </div>
+<<<<<<< HEAD
             <div class="text-truncate">
               <div class="fw-bold small text-truncate text-primary">
                 <%= userData.fullname %>
               </div>
               <div class="text-primary opacity-75" style="font-size: 11px">
                 Profil Saya
+=======
+            <div class="text-truncate" style="max-width: 170px">
+              <div class="fw-bold small text-white text-truncate">
+                <%= userData.fullname %>
+              </div>
+              <div
+                class="profile-email text-white-50 small text-truncate"
+                style="font-size: 11px"
+              >
+                <%= userData.username %>
+>>>>>>> 1a4f0043e035e209e0ee2c3e000707f11c5e7c6b
               </div>
             </div>
           </a>
@@ -191,7 +203,7 @@
                   <span class="text-muted small d-block">Status Akun</span>
                   <span
                     class="badge bg-primary bg-opacity-10 text-primary fw-semibold mt-1 px-3 py-2"
-                    >Dokter</span
+                    ><%= userData.role%></span
                   >
                 </div>
               </div>
@@ -219,11 +231,15 @@
                   <div class="col-12 col-md-6">
                     <div class="p-3 bg-light rounded-3 border border-1">
                       <span class="text-muted small d-block mb-1"
-                        >Username / ID</span
+                        >Username</span
                       >
+<<<<<<< HEAD
                       <strong class="text-dark"
                         ><%= userData.username %></strong
                       >
+=======
+                      <strong class="text-dark"><%= userData.username%></strong>
+>>>>>>> 1a4f0043e035e209e0ee2c3e000707f11c5e7c6b
                     </div>
                   </div>
 
@@ -259,11 +275,23 @@
                   <div class="col-12 col-md-6">
                     <div class="p-3 bg-light rounded-3 border border-1">
                       <span class="text-muted small d-block mb-1"
-                        >Nomor Telepon / WA</span
+                        >Golongan Darah</span
                       >
+                      <strong class="text-dark"
+                        ><%= userData.bloodType%></strong
+                      >
+<<<<<<< HEAD
                       <strong class="text-dark"
                         ><%= userData.phone || '-' %></strong
                       >
+=======
+                    </div>
+                  </div>
+                  <div class="col-12 col-md-6">
+                    <div class="p-3 bg-light rounded-3 border border-1">
+                      <span class="text-muted small d-block mb-1">No Telp</span>
+                      <strong class="text-dark"><%= userData.phone %></strong>
+>>>>>>> 1a4f0043e035e209e0ee2c3e000707f11c5e7c6b
                     </div>
                   </div>
                 </div>

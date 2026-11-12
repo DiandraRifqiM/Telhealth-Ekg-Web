@@ -105,26 +105,30 @@
                       <th class="py-3 text-center">Aksi</th>
                     </tr>
                   </thead>
+                  <% getPatient.forEach((data, num) => { %>
                   <tbody>
                     <tr>
-                      <td>1</td>
-                      <td>Kemal123</td>
-                      <td>Kemal Palevi</td>
-                      <td>Pasien</td>
+                      <td><%= num+=1 %></td>
+                      <td><%= data.username %></td>
+                      <td><%= data.fullname %></td>
+                      <td><%= data.role %></td>
                       <td class="text-center">
-                        <a
-                          href="/dokterDashboard/pasien/detail"
-                          class="btn btn-info btn-sm text-white px-3 me-1 fw-semibold text-decoration-none"
-                          >Detail</a
+                        <button
+                          onclick="switchSubView('detail')"
+                          class="btn btn-info btn-sm text-white px-3 me-1 fw-semibold"
                         >
-                        <a
-                          href="/dokterDashboard/pasien/pantau"
-                          class="btn btn-primary btn-sm px-3 fw-semibold text-decoration-none"
-                          >Pantau</a
+                          Detail
+                        </button>
+                        <button
+                          onclick="switchSubView('pantau')"
+                          class="btn btn-primary btn-sm px-3 fw-semibold"
                         >
+                          Pantau
+                        </button>
                       </td>
                     </tr>
                   </tbody>
+                  <% }) %>
                 </table>
               </div>
             </div>
