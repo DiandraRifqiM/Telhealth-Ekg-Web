@@ -121,7 +121,7 @@ const searchPasien = async (keyword) => {
       .filter(
         (doc) =>
           doc.fullname?.toLowerCase().includes(keyword.toLowerCase()) ||
-          doc.username?.toLowerCase().includes(keyword.toLowerCase())
+          doc.username?.toLowerCase().includes(keyword.toLowerCase()),
       );
 
     return { getPasienData };
@@ -174,7 +174,7 @@ const searchDokter = async (keyword) => {
       .filter(
         (doc) =>
           doc.fullname?.toLowerCase().includes(keyword.toLowerCase()) ||
-          doc.username?.toLowerCase().includes(keyword.toLowerCase())
+          doc.username?.toLowerCase().includes(keyword.toLowerCase()),
       );
 
     return { getDokterData };
@@ -227,7 +227,7 @@ const searchAdmin = async (keyword) => {
       .filter(
         (doc) =>
           doc.fullname?.toLowerCase().includes(keyword.toLowerCase()) ||
-          doc.username?.toLowerCase().includes(keyword.toLowerCase())
+          doc.username?.toLowerCase().includes(keyword.toLowerCase()),
       );
 
     return { getAdminData };
@@ -272,6 +272,35 @@ const updateUser = async (id, userData) => {
   }
 };
 
+const getPasienListbyId = async (ids = []) => {
+  try {
+    const snapshot = await Promise.all(
+      ids.map((id) => db.collection("users").doc(id).get()),
+    );
+
+    const getPasien = snapshot
+      .filter((doc) => doc.exists)
+      .map((doc) => {
+        const data = doc.data();
+
+        return {
+          userId: doc.id,
+          username: data.username,
+          fullname: data.fullname,
+          dob: data.dob,
+          gender: data.gender,
+          bloodType: data.bloodType,
+          phone: data.phone,
+          role: capitalize(data.role),
+        };
+      });
+
+    return getPasien;
+  } catch (error) {
+    console.log("Fetch error!", error);
+  }
+};
+
 module.exports = {
   addUser,
   validateUser,
@@ -284,4 +313,5 @@ module.exports = {
   searchAdmin,
   updateUser,
   delUser,
+  getPasienListbyId,
 };

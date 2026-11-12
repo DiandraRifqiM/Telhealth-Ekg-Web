@@ -23,10 +23,11 @@ const {
   searchAdmin,
   updateUser,
   delUser,
+  getPasienListbyId,
 } = require("./services/userService");
 
 // patient
-const { addPatient } = require("./services/patientList");
+const { addPatient, getPatienId } = require("./services/patientList");
 
 //Esp Data
 const { addEspRecord, readEspRecord } = require("./services/espService");
@@ -59,7 +60,7 @@ app.use(
     secret: "secret",
     resave: false,
     saveUninitialized: false,
-  }),
+  })
 );
 app.use(flash());
 
@@ -194,7 +195,7 @@ app.get(
       userData,
       activeTab: "profile",
     });
-  },
+  }
 );
 
 // Halaman Detail Pengguna (Admin)
@@ -219,7 +220,7 @@ app.get(
       console.log("Gagal memuat detail user:", error.message);
       return res.redirect("/adminDashboard");
     }
-  },
+  }
 );
 
 // Update User Data
@@ -325,7 +326,7 @@ app.get(
       console.log("Gagal memuat halaman add pasien dokter:", error.message);
       return res.redirect("/adminDashboard/dokter");
     }
-  },
+  }
 );
 
 // Halaman List Pasien Dokter (Pure Front-End Route)
@@ -361,7 +362,7 @@ app.post(
     } catch (error) {
       console.log("Gagal menambah pasien", error);
     }
-  },
+  }
 );
 
 // ==========================================
@@ -384,7 +385,7 @@ app.get(
       getPasienData,
       activeTab: "pasien",
     });
-  },
+  }
 );
 
 // Daftar Dokter
@@ -405,7 +406,7 @@ app.get(
       getDokterData,
       activeTab: "dokter",
     });
-  },
+  }
 );
 
 // Daftar Admin
@@ -426,7 +427,7 @@ app.get(
       getAdminData,
       activeTab: "admin",
     });
-  },
+  }
 );
 
 // Add User
@@ -442,7 +443,7 @@ app.get(
       userData,
       activeTab: "addUser",
     });
-  },
+  }
 );
 
 // proccess addUser
@@ -521,6 +522,10 @@ app.get("/dokterDashboard", isAuth, authRole("dokter"), async (req, res) => {
   res.render("dokter/dokterDashboard", { title: "Dashboard Dokter", userData });
 });
 
+<<<<<<< HEAD
+=======
+// List Daftar Pasien
+>>>>>>> 1a4f0043e035e209e0ee2c3e000707f11c5e7c6b
 app.get(
   "/dokterDashboard/pasien",
   isAuth,
@@ -528,8 +533,15 @@ app.get(
   async (req, res) => {
     const userId = req.session.userId;
     const userData = await getUserData(userId);
-    res.render("dokter/dokterPasien", { title: "Daftar Pasien", userData });
-  },
+    const patientId = await getPatienId(userId);
+    const getPatient = await getPasienListbyId(patientId);
+    console.log(getPatient);
+    res.render("dokter/dokterPasien", {
+      title: "Daftar Pasien",
+      userData,
+      getPatient,
+    });
+  }
 );
 
 app.get(
@@ -565,7 +577,7 @@ app.get(
     const userId = req.session.userId;
     const userData = await getUserData(userId);
     res.render("dokter/dokterProfile", { title: "Profil Dokter", userData });
-  },
+  }
 );
 
 // PASIEN ENVIRONMENT
@@ -613,7 +625,7 @@ app.post(
         message: error.message,
       });
     }
-  },
+  }
 );
 
 // Port listened
