@@ -233,8 +233,48 @@
     <!-- SCRIPT BOOTSTRAP & CHART.JS (STATIS) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/js/pasienDashboard.js"></script>
+
+    <script>
+      const ctx = document.getElementById("ecgChart").getContext("2d");
+
+      const ecgChart = new Chart(ctx, {
+        type: "line",
+        data: {
+          labels: ["0s", "1s", "2s", "3s", "4s", "5s", "6s", "7s", "8s", "9s"],
+          datasets: [
+            {
+              label: "Sinyal EKG (mV)",
+              data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+              borderColor: "#0d6efd",
+              backgroundColor: "rgba(13, 110, 253, 0.05)",
+              borderWidth: 2,
+              tension: 0.3,
+              fill: true,
+              pointRadius: 2,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              beginAtZero: true,
+              suggestedMax: 50,
+              grid: { color: "rgba(0,0,0,0.05)" },
+            },
+            x: {
+              grid: { display: false },
+            },
+          },
+          plugins: {
+            legend: { display: false },
+          },
+        },
+      });
+    </script>
 
     <!-- Public Script -->
-    <script src="/js/pasienDashboard.js"></script>
   </body>
 </html>

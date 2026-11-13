@@ -342,7 +342,7 @@ app.get(
       userData,
       activeTab: "dokter",
     });
-  },
+  }
 );
 
 // Proses tambah pasien ke dokter
@@ -522,10 +522,7 @@ app.get("/dokterDashboard", isAuth, authRole("dokter"), async (req, res) => {
   res.render("dokter/dokterDashboard", { title: "Dashboard Dokter", userData });
 });
 
-<<<<<<< HEAD
-=======
 // List Daftar Pasien
->>>>>>> 1a4f0043e035e209e0ee2c3e000707f11c5e7c6b
 app.get(
   "/dokterDashboard/pasien",
   isAuth,
@@ -535,7 +532,6 @@ app.get(
     const userData = await getUserData(userId);
     const patientId = await getPatienId(userId);
     const getPatient = await getPasienListbyId(patientId);
-    console.log(getPatient);
     res.render("dokter/dokterPasien", {
       title: "Daftar Pasien",
       userData,
@@ -544,29 +540,40 @@ app.get(
   }
 );
 
+// Dokter-DetailPasien
 app.get(
-  "/dokterDashboard/pasien/detail",
+  "/dokterDashboard/pasien/detail/:id",
   isAuth,
   authRole("dokter"),
   async (req, res) => {
     const userId = req.session.userId;
     const userData = await getUserData(userId);
+    const patientId = req.params.id;
+    const patientData = await getUserData(patientId);
     res.render("dokter/detailPasien", {
       title: "Detail Informasi Pasien",
       userData,
+      patientData,
     });
-  },
+  }
 );
 
+// Monitorin Pasien
 app.get(
-  "/dokterDashboard/pasien/pantau",
+  "/dokterDashboard/pasien/pantau/:id",
   isAuth,
   authRole("dokter"),
   async (req, res) => {
     const userId = req.session.userId;
     const userData = await getUserData(userId);
-    res.render("dokter/pantauPasien", { title: "Pantau EKG Pasien", userData });
-  },
+    const patientId = req.params.id;
+    const patientData = await getUserData(patientId);
+    res.render("dokter/pantauPasien", {
+      title: "Pantau EKG Pasien",
+      userData,
+      patientData,
+    });
+  }
 );
 
 app.get(

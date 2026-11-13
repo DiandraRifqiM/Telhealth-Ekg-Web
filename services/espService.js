@@ -16,22 +16,22 @@ const addEspRecord = async (deviceId, patientId, value) => {
 };
 
 // Baca record esp
-const readEspRecord = async (patientId, callback) => {
+const readEspRecord = (patientId, callback) => {
   try {
-    const espValue = await db
+    const unsubscribe = db
       .collection("EspData")
       .where("patientId", "==", patientId)
       .onSnapshot((snapshot) => {
         snapshot.docChanges().forEach((change) => {
-          if (change.type === "string" || change.type === "modified") {
+          if (change.type === "added" || change.type === "modified") {
             callback(change.doc.data().value);
           }
         });
       });
 
-    return espValue;
+    return unsubscribe;
   } catch (error) {
-    console.log("Fetch error", error);
+    console.log("Fetch error:", error);
   }
 };
 

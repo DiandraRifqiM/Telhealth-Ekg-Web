@@ -113,18 +113,18 @@
                       <td><%= data.fullname %></td>
                       <td><%= data.role %></td>
                       <td class="text-center">
-                        <button
-                          onclick="switchSubView('detail')"
+                        <a
+                          href="/dokterDashboard/pasien/detail/<%= data.userId %>"
                           class="btn btn-info btn-sm text-white px-3 me-1 fw-semibold"
                         >
                           Detail
-                        </button>
-                        <button
-                          onclick="switchSubView('pantau')"
+                        </a>
+                        <a
+                          href="/dokterDashboard/pasien/pantau/<%= data.userId %>"
                           class="btn btn-primary btn-sm px-3 fw-semibold"
                         >
                           Pantau
-                        </button>
+                        </a>
                       </td>
                     </tr>
                   </tbody>

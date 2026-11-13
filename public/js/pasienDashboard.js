@@ -1,40 +1,5 @@
-const ctx = document.getElementById("ecgChart").getContext("2d");
-
-const ecgChart = new Chart(ctx, {
-  type: "line",
-  data: {
-    labels: ["0s", "1s", "2s", "3s", "4s", "5s", "6s", "7s", "8s", "9s"],
-    datasets: [
-      {
-        label: "Sinyal EKG (mV)",
-        data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        borderColor: "#0d6efd",
-        backgroundColor: "rgba(13, 110, 253, 0.05)",
-        borderWidth: 2,
-        tension: 0.3,
-        fill: true,
-        pointRadius: 2,
-      },
-    ],
-  },
-  options: {
-    responsive: true,
-    maintainAspectRatio: false,
-    scales: {
-      y: {
-        beginAtZero: true,
-        suggestedMax: 50,
-        grid: { color: "rgba(0,0,0,0.05)" },
-      },
-      x: {
-        grid: { display: false },
-      },
-    },
-    plugins: {
-      legend: { display: false },
-    },
-  },
-});
+// DB
+// const { addEspRecord, readEspRecord } = require("./services/espService");
 
 // Bluetooth EKG Button
 
@@ -61,8 +26,8 @@ connectBtn.addEventListener("click", async () => {
 
     device.addEventListener("gattserverdisconnected", () => {
       console.log("ESP32 disconnected");
-      status.textContent = "Belum Terhubung";
 
+      status.textContent = "Belum Terhubung";
       statusBadge.textContent = "Disconnected";
       statusBadge.classList.remove("bg-success");
       statusBadge.classList.add("bg-danger");
@@ -71,7 +36,6 @@ connectBtn.addEventListener("click", async () => {
     stage = "Connecting GATT";
 
     const server = await device.gatt.connect();
-
     console.log("GATT connected:", server);
 
     stage = "Getting service";
@@ -92,35 +56,21 @@ connectBtn.addEventListener("click", async () => {
 
     stage = "Starting notifications";
 
-    // Listener realtime Firestore
-
-    const unsubscribe = readEspRecord("<%= patientId %>", (value) => {
-      document.getElementById("value").innerText = `BPM: ${value}`;
-    });
-
     characteristic.addEventListener(
       "characteristicvaluechanged",
       async (event) => {
-        const rawValue = new TextDecoder().decode(event.target.value);
+        const rawValue = new TextDecoder().decode(event.target.value).trim();
 
         console.log("Received:", rawValue);
 
-        // Mengabaikan BPM yang belum tersedia
-        if (rawValue === "--") {
-          document.getElementById("value").textContent = "BPM: --";
-          return;
-        }
+        document.getElementById("value").textContent = `BPM: ${rawValue}`;
+
+        if (rawValue === "--") return;
 
         const bpm = Number(rawValue);
 
-        // if (!Number.isFinite(bpm)) {
-        //   console.error("Invalid BPM:", rawValue);
-        //   return;
-        // }
+        if (!Number.isFinite(bpm)) return;
 
-        // document.getElementById("value").textContent = `BPM: ${bpm}`;
-
-        // Simpan data ke Firestore
         try {
           const response = await fetch("/pasienDashboard/api/esp-data", {
             method: "POST",
@@ -136,7 +86,7 @@ connectBtn.addEventListener("click", async () => {
           const result = await response.json();
 
           if (!response.ok) {
-            throw new Error(result.message || "Failed to save data");
+            throw new Error(result.message);
           }
 
           console.log("Data saved:", result);
@@ -152,6 +102,7 @@ connectBtn.addEventListener("click", async () => {
 
     status.textContent = "Perangkat Terhubung";
     statusBadge.textContent = "Connected";
+
     statusBadge.classList.remove("bg-danger");
     statusBadge.classList.add("bg-success");
   } catch (error) {
@@ -160,6 +111,8 @@ connectBtn.addEventListener("click", async () => {
     console.error("Error message:", error.message);
 
     status.textContent = "Gagal Terhubung";
+
+    alert("Gagal pada tahap: " + stage + "\nError: " + error.message);
   }
 });
 

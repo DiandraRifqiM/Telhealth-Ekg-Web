@@ -120,8 +120,12 @@
                     <i class="bi bi-person-fill fs-1"></i>
                   </div>
                 </div>
-                <h5 class="fw-bold text-dark mb-1">Kemal Palevi</h5>
-                <span class="text-muted small mb-3 d-block">@Kemal123</span>
+                <h5 class="fw-bold text-dark mb-1">
+                  <%= patientData.fullname %>
+                </h5>
+                <span class="text-muted small mb-3 d-block"
+                  >@<%= patientData.username %></span
+                >
 
                 <div class="text-start mt-2">
                   <hr class="text-muted opacity-25" />
@@ -130,12 +134,12 @@
                   >
                   <span
                     class="badge bg-primary bg-opacity-10 text-primary fw-semibold px-3 py-2 mb-3"
-                    >PASIEN</span
+                    ><%= patientData.role %></span
                   >
 
                   <span class="text-muted small d-block mb-1">ID Sistem</span>
                   <strong class="text-dark small text-break"
-                    >9mcsciAibS6amz0qqicT</strong
+                    ><%= patientData.id%></strong
                   >
                 </div>
               </div>
@@ -155,7 +159,9 @@
                       <span class="text-muted small d-block mb-1"
                         >Nama Lengkap</span
                       >
-                      <strong class="text-dark">Kemal Palevi</strong>
+                      <strong class="text-dark"
+                        ><%= patientData.fullname%></strong
+                      >
                     </div>
                   </div>
 
@@ -164,7 +170,9 @@
                       <span class="text-muted small d-block mb-1"
                         >Username</span
                       >
-                      <strong class="text-dark">Kemal123</strong>
+                      <strong class="text-dark"
+                        ><%= patientData.username %></strong
+                      >
                     </div>
                   </div>
 
@@ -173,7 +181,7 @@
                       <span class="text-muted small d-block mb-1"
                         >Tanggal Lahir</span
                       >
-                      <strong class="text-dark">09/02/1994</strong>
+                      <strong class="text-dark"><%= patientData.dob %></strong>
                     </div>
                   </div>
 
@@ -182,7 +190,9 @@
                       <span class="text-muted small d-block mb-1"
                         >Jenis Kelamin</span
                       >
-                      <strong class="text-dark">Laki-laki</strong>
+                      <strong class="text-dark"
+                        ><%= patientData.gender%></strong
+                      >
                     </div>
                   </div>
 
@@ -191,7 +201,9 @@
                       <span class="text-muted small d-block mb-1"
                         >Golongan Darah</span
                       >
-                      <strong class="text-dark">AB</strong>
+                      <strong class="text-dark"
+                        ><%= patientData.bloodType%></strong
+                      >
                     </div>
                   </div>
 
@@ -200,16 +212,7 @@
                       <span class="text-muted small d-block mb-1"
                         >Nomor Telepon / WA</span
                       >
-                      <strong class="text-dark">12345678</strong>
-                    </div>
-                  </div>
-
-                  <div class="col-12">
-                    <div class="p-3 bg-light rounded-3 border border-1">
-                      <span class="text-muted small d-block mb-1"
-                        >Peran (Role)</span
-                      >
-                      <strong class="text-dark">Pasien</strong>
+                      <strong class="text-dark"><%= patientData.phone%></strong>
                     </div>
                   </div>
                 </div>
